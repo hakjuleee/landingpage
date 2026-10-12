@@ -203,7 +203,7 @@
           <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <p class="text-primary text-label-lg font-semibold uppercase tracking-wider mb-2">Market &amp; Highlights</p>
-              <h2 class="text-headline-md lg:text-headline-lg text-text-primary">금곡동 실시간 시세 요약 및 주요 매물</h2>
+              <h2 class="text-headline-md lg:text-headline-lg text-text-primary">분당 아파트 실시간 시세 요약 및 주요매물</h2>
             </div>
             <div class="flex items-center gap-2 text-text-secondary text-body-sm">
               <span class="material-symbols-outlined text-sm">update</span>
@@ -274,7 +274,7 @@
           <div class="lg:col-span-5 flex flex-col gap-space-lg">
             <p class="text-primary text-label-lg font-semibold uppercase tracking-wider">About Hanyang</p>
             <h2 class="text-headline-md lg:text-headline-lg text-text-primary">
-              분당 금곡동의 든든한 파트너, <br>한양부동산입니다.
+              든든한 파트너, 한양부동산입니다.
             </h2>
             <p class="text-body-lg text-text-secondary leading-relaxed">
               저희 한양부동산은 26년 이상의 풍부한 실무경험과 지역 주민과의 깊은 신뢰를 바탕으로 정확하고 안전한 중개를 약속드립니다. 아파트, 상가, 재개발·재건축, 토지 및 자산관리까지 원스톱으로 전문 상담해 드립니다.
@@ -346,37 +346,38 @@
             </div>
             <h3 class="text-headline-md text-text-primary mb-2">간편 상담 신청</h3>
             <p class="text-body-md text-text-secondary mb-8">연락처를 남겨주시면 담당 중개사가 신속하게 전화 상담을 도와드립니다.</p>
-            <form class="flex flex-col gap-8" onsubmit="event.preventDefault(); alert('상담 신청이 접수되었습니다. 빠른 시간 내에 연락드리겠습니다.');">
+            <form id="consult-form" class="flex flex-col gap-8" onsubmit="handleConsultSubmit(event)">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="relative">
-                  <input class="w-full bg-transparent border-b border-outline-variant focus:border-primary text-text-primary pb-2 pt-4 outline-none transition-colors peer placeholder-transparent min-h-[44px]" id="name" placeholder=" " required="" type="text">
-                  <label class="absolute left-0 top-4 text-text-secondary text-body-md transition-all peer-focus:-top-3 peer-focus:text-xs peer-focus:text-primary peer-not-placeholder-shown:-top-3 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-primary pointer-events-none" for="name">성함</label>
+                  <input class="w-full bg-transparent border-b border-outline-variant focus:border-primary text-text-primary pb-2 pt-4 outline-none transition-colors peer placeholder-transparent min-h-[44px]" id="consult-name" placeholder=" " required="" type="text">
+                  <label class="absolute left-0 top-4 text-text-secondary text-body-md transition-all peer-focus:-top-3 peer-focus:text-xs peer-focus:text-primary peer-not-placeholder-shown:-top-3 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-primary pointer-events-none" for="consult-name">성함</label>
                 </div>
                 <div class="relative">
-                  <input class="w-full bg-transparent border-b border-outline-variant focus:border-primary text-text-primary pb-2 pt-4 outline-none transition-colors peer placeholder-transparent min-h-[44px]" id="phone" placeholder=" " required="" type="tel">
-                  <label class="absolute left-0 top-4 text-text-secondary text-body-md transition-all peer-focus:-top-3 peer-focus:text-xs peer-focus:text-primary peer-not-placeholder-shown:-top-3 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-primary pointer-events-none" for="phone">연락처 (휴대폰 번호)</label>
+                  <input class="w-full bg-transparent border-b border-outline-variant focus:border-primary text-text-primary pb-2 pt-4 outline-none transition-colors peer placeholder-transparent min-h-[44px]" id="consult-phone" placeholder=" " required="" type="tel">
+                  <label class="absolute left-0 top-4 text-text-secondary text-body-md transition-all peer-focus:-top-3 peer-focus:text-xs peer-focus:text-primary peer-not-placeholder-shown:-top-3 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-primary pointer-events-none" for="consult-phone">연락처 (휴대폰 번호)</label>
                 </div>
               </div>
               <div class="relative">
-                <select class="w-full bg-transparent border-b border-outline-variant focus:border-primary text-text-primary pb-2 pt-4 outline-none transition-colors peer min-h-[44px]" id="inquiry-type" required="">
+                <select class="w-full bg-transparent border-b border-outline-variant focus:border-primary text-text-primary pb-2 pt-4 outline-none transition-colors peer min-h-[44px]" id="consult-type" required="">
                   <option class="bg-surface text-text-secondary" disabled="" selected="" value="">상담 분야를 선택해주세요</option>
-                  <option class="bg-surface text-text-primary" value="buy">매매 상담</option>
-                  <option class="bg-surface text-text-primary" value="jeonse">전세 / 월세 상담</option>
-                  <option class="bg-surface text-text-primary" value="commercial">상가 / 오피스</option>
-                  <option class="bg-surface text-text-primary" value="other">기타 문의</option>
+                  <option class="bg-surface text-text-primary" value="매매 상담">매매 상담</option>
+                  <option class="bg-surface text-text-primary" value="전세/월세 상담">전세 / 월세 상담</option>
+                  <option class="bg-surface text-text-primary" value="상가/오피스">상가 / 오피스</option>
+                  <option class="bg-surface text-text-primary" value="재건축/재개발/토지">재건축 / 재개발 / 토지</option>
+                  <option class="bg-surface text-text-primary" value="기타 문의">기타 문의</option>
                 </select>
               </div>
               <div class="relative">
-                <textarea class="w-full bg-transparent border-b border-outline-variant focus:border-primary text-text-primary pb-2 pt-4 outline-none transition-colors peer placeholder-transparent resize-none" id="message" placeholder=" " rows="3"></textarea>
-                <label class="absolute left-0 top-4 text-text-secondary text-body-md transition-all peer-focus:-top-3 peer-focus:text-xs peer-focus:text-primary peer-not-placeholder-shown:-top-3 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-primary pointer-events-none" for="message">문의 내용 (선택사항)</label>
+                <textarea class="w-full bg-transparent border-b border-outline-variant focus:border-primary text-text-primary pb-2 pt-4 outline-none transition-colors peer placeholder-transparent resize-none" id="consult-message" placeholder=" " rows="3"></textarea>
+                <label class="absolute left-0 top-4 text-text-secondary text-body-md transition-all peer-focus:-top-3 peer-focus:text-xs peer-focus:text-primary peer-not-placeholder-shown:-top-3 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-primary pointer-events-none" for="consult-message">문의 내용 (선택사항)</label>
               </div>
               <div class="flex items-center gap-3">
-                <input class="w-5 h-5 rounded border-outline bg-transparent text-primary focus:ring-0" id="privacy" required="" type="checkbox">
-                <label class="text-body-sm text-text-secondary" for="privacy">개인정보 수집 및 이용에 동의합니다.</label>
+                <input class="w-5 h-5 rounded border-outline bg-transparent text-primary focus:ring-0" id="consult-privacy" required="" type="checkbox" checked>
+                <label class="text-body-sm text-text-secondary" for="consult-privacy">개인정보 수집 및 이용에 동의합니다.</label>
               </div>
-              <button class="w-full py-4 bg-primary text-on-primary font-label-lg font-semibold rounded-xl hover:bg-primary-fixed transition-colors shadow-lg flex items-center justify-center gap-2 min-h-[44px]" type="submit">
+              <button id="consult-submit-btn" class="w-full py-4 bg-primary text-on-primary font-label-lg font-semibold rounded-xl hover:bg-primary-fixed transition-colors shadow-lg flex items-center justify-center gap-2 min-h-[44px]" type="submit">
                 <span class="material-symbols-outlined">send</span>
-                <span>상담 신청하기</span>
+                <span id="consult-btn-text">상담 신청하기</span>
               </button>
             </form>
           </div>
@@ -483,6 +484,64 @@
         previewSec.style.display = 'none';
       }
     }
+
+    async function handleConsultSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('consult-submit-btn');
+      const btnText = document.getElementById('consult-btn-text');
+      const name = document.getElementById('consult-name').value.trim();
+      const phone = document.getElementById('consult-phone').value.trim();
+      const type = document.getElementById('consult-type').value;
+      const message = document.getElementById('consult-message').value.trim();
+
+      if (!name || !phone) {
+        alert('성함과 연락처를 모두 입력해 주세요.');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      btnText.textContent = '신청 전송 중...';
+
+      try {
+        const res = await fetch('/api/inquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, phone, type, message })
+        });
+
+        if (res.ok) {
+          alert('상담 신청이 정상적으로 접수되었습니다! 담당자가 확인 후 빠른 시간 내에 연락드리겠습니다.');
+          document.getElementById('consult-form').reset();
+        } else {
+          // Fallback direct Formsubmit if serverless fails
+          const fbRes = await fetch('https://formsubmit.co/ajax/realhj629@naver.com', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              _subject: `[한양부동산 상담신청] ${name} (${type || '일반상담'})`,
+              "고객명": name,
+              "연락처": phone,
+              "상담분야": type || "상담 요청",
+              "문의내용": message || "내용 없음"
+            })
+          });
+          if (fbRes.ok) {
+            alert('상담 신청이 접수되었습니다! 빠른 시간 내에 연락드리겠습니다.');
+            document.getElementById('consult-form').reset();
+          } else {
+            alert('상담 신청 접수 중 오류가 발생했습니다. 유선 전화(031-713-8822)로 문의해 주시기 바랍니다.');
+          }
+        }
+      } catch(err) {
+        alert('상담 신청 접수 중 네트워크 오류가 발생했습니다. 유선 전화(031-713-8822)로 문의해 주세요.');
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50');
+        btnText.textContent = '상담 신청하기';
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', loadPreview);
   </script>
 </body>

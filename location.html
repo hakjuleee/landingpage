@@ -255,36 +255,36 @@
               <h2 class="text-headline-md text-text-primary mt-1">실시간 문의 및 방문예약</h2>
               <p class="text-body-sm text-text-secondary mt-1">아래 양식을 작성해주시면 신속하게 확인 후 연락드리겠습니다.</p>
             </div>
-            <form class="space-y-6" onsubmit="event.preventDefault(); alert('문의가 성공적으로 접수되었습니다. 빠른 시간 내에 연락드리겠습니다.');">
+            <form id="loc-visit-form" class="space-y-6" onsubmit="handleLocationSubmit(event)">
               <div class="flex gap-2 p-1 bg-surface-container-lowest rounded-lg">
                 <button class="flex-1 py-2 text-label-md font-semibold bg-primary text-on-primary rounded transition-all min-h-[44px]" onclick="setFormType(this, 'visit')" type="button">방문 예약</button>
                 <button class="flex-1 py-2 text-label-md text-text-secondary hover:text-text-primary rounded transition-all min-h-[44px]" onclick="setFormType(this, 'inquiry')" type="button">매물/기타 문의</button>
               </div>
               <div class="relative pt-4">
-                <input class="w-full bg-transparent border-b border-outline focus:border-primary pb-2 text-text-primary text-body-md outline-none transition-colors peer min-h-[44px]" id="name" placeholder=" " required="" type="text">
-                <label class="absolute left-0 top-4 text-text-secondary text-body-md transition-all peer-focus:top-0 peer-focus:text-label-sm peer-focus:text-primary peer-valid:top-0 peer-valid:text-label-sm" for="name">성함 / 연락처 명</label>
+                <input class="w-full bg-transparent border-b border-outline focus:border-primary pb-2 text-text-primary text-body-md outline-none transition-colors peer min-h-[44px]" id="loc-name" placeholder=" " required="" type="text">
+                <label class="absolute left-0 top-4 text-text-secondary text-body-md transition-all peer-focus:top-0 peer-focus:text-label-sm peer-focus:text-primary peer-valid:top-0 peer-valid:text-label-sm" for="loc-name">성함 / 연락처 명</label>
               </div>
               <div class="relative pt-4">
-                <input class="w-full bg-transparent border-b border-outline focus:border-primary pb-2 text-text-primary text-body-md outline-none transition-colors peer min-h-[44px]" id="phone" placeholder=" " required="" type="tel">
-                <label class="absolute left-0 top-4 text-text-secondary text-body-md transition-all peer-focus:top-0 peer-focus:text-label-sm peer-focus:text-primary peer-valid:top-0 peer-valid:text-label-sm" for="phone">전화번호 ('-' 제외 입력)</label>
+                <input class="w-full bg-transparent border-b border-outline focus:border-primary pb-2 text-text-primary text-body-md outline-none transition-colors peer min-h-[44px]" id="loc-phone" placeholder=" " required="" type="tel">
+                <label class="absolute left-0 top-4 text-text-secondary text-body-md transition-all peer-focus:top-0 peer-focus:text-label-sm peer-focus:text-primary peer-valid:top-0 peer-valid:text-label-sm" for="loc-phone">전화번호 ('-' 제외 입력)</label>
               </div>
               <div class="grid grid-cols-2 gap-4 pt-2" id="visit-fields">
                 <div class="relative pt-4">
-                  <input class="w-full bg-transparent border-b border-outline focus:border-primary pb-2 text-text-primary text-body-md outline-none transition-colors min-h-[44px]" id="visit-date" type="date">
-                  <label class="absolute left-0 top-0 text-label-sm text-primary" for="visit-date">희망 방문일</label>
+                  <input class="w-full bg-transparent border-b border-outline focus:border-primary pb-2 text-text-primary text-body-md outline-none transition-colors min-h-[44px]" id="loc-visit-date" type="date">
+                  <label class="absolute left-0 top-0 text-label-sm text-primary" for="loc-visit-date">희망 방문일</label>
                 </div>
                 <div class="relative pt-4">
-                  <input class="w-full bg-transparent border-b border-outline focus:border-primary pb-2 text-text-primary text-body-md outline-none transition-colors min-h-[44px]" id="visit-time" type="time">
-                  <label class="absolute left-0 top-0 text-label-sm text-primary" for="visit-time">희망 시간</label>
+                  <input class="w-full bg-transparent border-b border-outline focus:border-primary pb-2 text-text-primary text-body-md outline-none transition-colors min-h-[44px]" id="loc-visit-time" type="time">
+                  <label class="absolute left-0 top-0 text-label-sm text-primary" for="loc-visit-time">희망 시간</label>
                 </div>
               </div>
               <div class="relative pt-4">
-                <textarea class="w-full bg-transparent border-b border-outline focus:border-primary pb-2 text-text-primary text-body-md outline-none transition-colors resize-none peer" id="message" placeholder=" " required="" rows="4"></textarea>
-                <label class="absolute left-0 top-4 text-text-secondary text-body-md transition-all peer-focus:top-0 peer-focus:text-label-sm peer-focus:text-primary peer-valid:top-0 peer-valid:text-label-sm" for="message">문의 내용 (관심 평형, 전/월세 여부 등)</label>
+                <textarea class="w-full bg-transparent border-b border-outline focus:border-primary pb-2 text-text-primary text-body-md outline-none transition-colors resize-none peer" id="loc-message" placeholder=" " required="" rows="4"></textarea>
+                <label class="absolute left-0 top-4 text-text-secondary text-body-md transition-all peer-focus:top-0 peer-focus:text-label-sm peer-focus:text-primary peer-valid:top-0 peer-valid:text-label-sm" for="loc-message">문의 내용 (관심 평형, 전/월세 여부 등)</label>
               </div>
-              <button class="w-full py-4 bg-primary text-on-primary font-label-lg rounded-xl hover:bg-primary-fixed transition-all flex items-center justify-center gap-2 shadow-md mt-6 min-h-[44px]" type="submit">
+              <button id="loc-submit-btn" class="w-full py-4 bg-primary text-on-primary font-label-lg rounded-xl hover:bg-primary-fixed transition-all flex items-center justify-center gap-2 shadow-md mt-6 min-h-[44px]" type="submit">
                 <span class="material-symbols-outlined">send</span>
-                <span>상담 신청하기</span>
+                <span id="loc-btn-text">상담 신청하기</span>
               </button>
             </form>
             <div class="mt-6 pt-6 border-t border-outline-variant/10 text-center">
@@ -351,6 +351,63 @@
         visitFields.style.display = 'grid';
       } else {
         visitFields.style.display = 'none';
+      }
+    }
+
+    async function handleLocationSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('loc-submit-btn');
+      const btnText = document.getElementById('loc-btn-text');
+      const name = document.getElementById('loc-name').value.trim();
+      const phone = document.getElementById('loc-phone').value.trim();
+      const date = document.getElementById('loc-visit-date').value;
+      const time = document.getElementById('loc-visit-time').value;
+      const message = document.getElementById('loc-message').value.trim();
+
+      if (!name || !phone) {
+        alert('성함과 연락처를 모두 입력해 주세요.');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      btnText.textContent = '전송 중...';
+
+      try {
+        const res = await fetch('/api/inquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, phone, type: '방문예약/문의', date, time, message })
+        });
+
+        if (res.ok) {
+          alert('예약 및 상담 문의가 정상 접수되었습니다! 담당자가 확인 후 신속히 연락드리겠습니다.');
+          document.getElementById('loc-visit-form').reset();
+        } else {
+          const fbRes = await fetch('https://formsubmit.co/ajax/realhj629@naver.com', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              _subject: `[한양부동산 방문예약/문의] ${name}`,
+              "고객명": name,
+              "연락처": phone,
+              "희망방문일시": `${date || ''} ${time || ''}`.trim() || '미지정',
+              "문의내용": message || '내용 없음'
+            })
+          });
+          if (fbRes.ok) {
+            alert('예약 및 상담 문의가 접수되었습니다! 확인 후 신속히 연락드리겠습니다.');
+            document.getElementById('loc-visit-form').reset();
+          } else {
+            alert('문의 접수 중 오류가 발생했습니다. 전화(031-713-8822)로 문의해 주시기 바랍니다.');
+          }
+        }
+      } catch(err) {
+        alert('네트워크 오류가 발생했습니다. 전화(031-713-8822)로 문의해 주시기 바랍니다.');
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50');
+        btnText.textContent = '상담 신청하기';
       }
     }
   </script>
