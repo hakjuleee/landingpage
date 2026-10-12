@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="dark" lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>게시글 상세 - 한양공인중개사사무소</title>
+  <style>
+    @layer base {
+      html, body { margin:0; padding:0; }
+      body { overscroll-behavior:none; }
+      main>:first-child { margin-top:0!important; }
+      main>:last-child { margin-bottom:0!important; }
+    }
+    ::-webkit-scrollbar { display:none; }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-dark": "#121821",
+            "on-tertiary-container": "#d2a362",
+            "on-surface-variant": "#c3c6d0",
+            "secondary": "#a6c8ff",
+            "on-primary": "#0e3159",
+            "inverse-primary": "#425f8a",
+            "tertiary": "#efbe7a",
+            "error-container": "#93000a",
+            "text-primary": "#F0F4F8",
+            "surface-container-highest": "#343538",
+            "secondary-fixed": "#d5e3ff",
+            "surface": "#121316",
+            "outline": "#8d9199",
+            "on-secondary": "#003060",
+            "on-tertiary": "#452b00",
+            "inverse-on-surface": "#2f3033",
+            "tertiary-fixed-dim": "#efbe7a",
+            "surface-container": "#1e2023",
+            "on-background": "#e3e2e6",
+            "on-error": "#690005",
+            "surface-dim": "#121316",
+            "outline-variant": "#43474e",
+            "on-secondary-container": "#8fb7f4",
+            "surface-bright": "#38393c",
+            "surface-tint": "#abc8f9",
+            "secondary-container": "#19477e",
+            "background-dark": "#0A0E14",
+            "on-secondary-fixed": "#001c3b",
+            "background": "#121316",
+            "tertiary-fixed": "#ffddb3",
+            "on-error-container": "#ffdad6",
+            "on-primary-fixed": "#001c3b",
+            "surface-variant": "#343538",
+            "surface-container-high": "#292a2d",
+            "inverse-surface": "#e3e2e6",
+            "primary-fixed": "#d5e3ff",
+            "primary-fixed-dim": "#abc8f9",
+            "surface-container-low": "#1a1c1f",
+            "secondary-fixed-dim": "#a6c8ff",
+            "on-primary-fixed-variant": "#294771",
+            "tertiary-container": "#593900",
+            "accent": "#4D80C7",
+            "surface-container-lowest": "#0d0e11",
+            "on-secondary-fixed-variant": "#19477e",
+            "on-tertiary-fixed-variant": "#614006",
+            "error": "#ffb4ab",
+            "primary-container": "#214069",
+            "on-primary-container": "#8facdc",
+            "text-secondary": "#9BA3AF",
+            "primary": "#abc8f9",
+            "on-tertiary-fixed": "#291800",
+            "on-surface": "#e3e2e6"
+          },
+          borderRadius: {
+            DEFAULT: "0.125rem",
+            lg: "0.25rem",
+            xl: "0.5rem",
+            full: "0.75rem"
+          },
+          spacing: {
+            gutter: "1.5rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            margin: "1.5rem",
+            "space-md": "1rem",
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem"
+          },
+          fontFamily: {
+            "headline-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-sm": ["Inter"],
+            "label-lg": ["Inter"],
+            "label-md": ["Inter"],
+            "body-lg": ["Inter"]
+          },
+          fontSize: {
+            "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+            "label-sm": ["10px", { lineHeight: "14px", fontWeight: "500" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+            "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "600" }],
+            "label-lg": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+            "label-md": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+            "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }]
+          }
+        }
+      }
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-surface font-body-md text-on-surface pb-16 md:pb-0">
+  <header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+    <div class="h-20 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary text-headline-md">apartment</span>
+        <span class="font-headline-sm tracking-tight text-on-surface">한양공인중개사사무소 <span class="text-xs text-text-secondary font-normal">(금곡동)</span></span>
+      </a>
+      <nav class="hidden md:flex items-center gap-space-xl">
+        <a class="text-sm text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm min-h-[44px] flex items-center" href="index.html">홈</a>
+        <a aria-current="page" class="transition-colors py-space-xs px-space-sm bg-primary-container text-on-primary-container font-semibold rounded-lg min-h-[44px] flex items-center" href="news.html">실거래가&amp;뉴스</a>
+        <a class="text-sm text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm min-h-[44px] flex items-center" href="properties.html">매물안내</a>
+        <a class="text-sm text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm min-h-[44px] flex items-center" href="location.html">오시는길</a>
+      </nav>
+      <div class="flex items-center gap-4">
+        <a class="flex items-center gap-2 bg-primary-container text-on-primary-container px-space-md py-space-sm rounded-lg hover:bg-primary hover:text-on-primary transition-all font-label-md min-h-[44px]" href="tel:031-713-8822">
+          <span class="material-symbols-outlined text-sm">call</span>
+          <span>031-713-8822</span>
+        </a>
+        <img alt="Profile" class="w-10 h-10 rounded-full object-cover hidden sm:block border border-outline-variant" src="agent.jpg">
+      </div>
+    </div>
+  </header>
+
+  <main class="w-full pt-20 bg-surface min-h-[80vh]">
+    <div class="max-w-4xl mx-auto px-6 py-12">
+      <div class="mb-6 flex items-center justify-between">
+        <a href="news.html" class="inline-flex items-center gap-1 text-primary hover:underline text-sm min-h-[44px]">
+          <span class="material-symbols-outlined text-sm">arrow_back</span> 목록으로 돌아가기
+        </a>
+        <div id="admin-actions" class="hidden items-center gap-2">
+          <a id="edit-btn" href="#" class="px-3 py-1.5 rounded-lg bg-surface-container-highest text-on-surface hover:bg-surface-bright transition-colors text-xs font-medium flex items-center gap-1 min-h-[44px]">
+            <span class="material-symbols-outlined text-sm">edit</span> 수정
+          </a>
+          <button id="delete-btn" onclick="onDeleteClick()" class="px-3 py-1.5 rounded-lg bg-error-container text-error hover:opacity-90 transition-opacity text-xs font-medium flex items-center gap-1 min-h-[44px]">
+            <span class="material-symbols-outlined text-sm">delete</span> 삭제
+          </button>
+        </div>
+      </div>
+
+      <article class="bg-surface-container rounded-2xl p-8 md:p-12 border border-outline-variant/20 shadow-xl">
+        <div class="border-b border-outline-variant/20 pb-6 mb-8">
+          <div class="flex items-center gap-3 mb-3">
+            <span id="post-category" class="px-3 py-1 rounded text-xs font-semibold bg-primary-container text-on-primary-container">카테고리</span>
+            <span id="post-date" class="text-xs text-text-secondary">2026-00-00</span>
+          </div>
+          <h1 id="post-title" class="text-headline-lg font-bold text-on-surface leading-tight">게시글 제목</h1>
+          <div class="flex items-center gap-2 mt-4 text-xs text-outline">
+            <span class="material-symbols-outlined text-sm">person</span>
+            <span id="post-author">작성자</span>
+          </div>
+        </div>
+
+        <div id="post-content" class="leading-relaxed text-on-surface-variant min-h-[200px]"></div>
+      </article>
+
+      <div class="mt-8 flex justify-center">
+        <a href="news.html" class="px-8 py-3.5 bg-surface-container-high hover:bg-surface-bright text-on-surface rounded-xl font-medium transition-colors text-sm flex items-center gap-2 min-h-[44px]">
+          <span class="material-symbols-outlined text-base">list</span>
+          <span>목록으로 돌아가기</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="w-full bg-surface-container-low py-space-xl">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-space-md text-on-surface-variant text-body-sm">
+      <div>
+        <p class="font-semibold text-on-surface">한양공인중개사사무소(금곡동)</p>
+        <p>경기도 성남시 분당구 금곡동 133-2 청솔주공9단지 아파트 단지내상가 107호 | 대표: 이춘권 | 등록번호: 제41135-2018-00141호</p>
+      </div>
+      <div class="flex flex-col md:items-end gap-1">
+        <p>전화: 031-713-8822</p>
+        <p>© Hanyang Real Estate. All rights reserved.</p>
+        <a id="agent-login-btn" href="admin.html" class="text-xs text-outline hover:text-primary transition-colors mt-2 inline-flex items-center gap-1 min-h-[44px]">
+          <span class="material-symbols-outlined text-sm">lock</span> Agent Login
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-surface-container-high/95 backdrop-blur-md border-t border-outline-variant/30 flex justify-around items-center h-16 px-2">
+    <a href="index.html" class="flex flex-col items-center justify-center flex-1 py-1 text-on-surface-variant hover:text-on-surface min-h-[44px]">
+      <span class="material-symbols-outlined text-xl">home</span>
+      <span class="text-[11px] font-medium mt-0.5">홈</span>
+    </a>
+    <a href="news.html" class="flex flex-col items-center justify-center flex-1 py-1 text-primary min-h-[44px]">
+      <span class="material-symbols-outlined text-xl">newspaper</span>
+      <span class="text-[11px] font-medium mt-0.5">실거래/뉴스</span>
+    </a>
+    <a href="properties.html" class="flex flex-col items-center justify-center flex-1 py-1 text-on-surface-variant hover:text-on-surface min-h-[44px]">
+      <span class="material-symbols-outlined text-xl">domain</span>
+      <span class="text-[11px] font-medium mt-0.5">매물</span>
+    </a>
+    <a href="location.html" class="flex flex-col items-center justify-center flex-1 py-1 text-on-surface-variant hover:text-on-surface min-h-[44px]">
+      <span class="material-symbols-outlined text-xl">pin_drop</span>
+      <span class="text-[11px] font-medium mt-0.5">오시는길</span>
+    </a>
+    <a href="tel:031-713-8822" class="flex flex-col items-center justify-center flex-1 py-1 text-secondary min-h-[44px]">
+      <span class="material-symbols-outlined text-xl">call</span>
+      <span class="text-[11px] font-medium mt-0.5">전화</span>
+    </a>
+  </nav>
+
+  <script src="db.js"></script>
+  <script>
+    let currentPostId = null;
+
+    async function initDetail() {
+      const params = new URLSearchParams(window.location.search);
+      currentPostId = params.get('id');
+      if (!currentPostId) {
+        alert('존재하지 않는 게시글입니다.');
+        window.location.href = 'news.html';
+        return;
+      }
+
+      const post = await getPostById(currentPostId);
+      if (!post) {
+        alert('게시글을 찾을 수 없습니다.');
+        window.location.href = 'news.html';
+        return;
+      }
+
+      document.getElementById('post-category').textContent = post.category || '공지';
+      document.getElementById('post-date').textContent = post.date || '';
+      document.getElementById('post-title').textContent = post.title || '';
+      document.getElementById('post-author').textContent = post.author || '한양공인중개사';
+      
+      const contentEl = document.getElementById('post-content');
+      contentEl.innerHTML = renderMarkdown(post.content || '');
+
+      if (isAdmin()) {
+        const adminActions = document.getElementById('admin-actions');
+        const editBtn = document.getElementById('edit-btn');
+        adminActions.classList.remove('hidden');
+        adminActions.classList.add('flex');
+        editBtn.href = `news-write.html?id=${post.id}`;
+      }
+    }
+
+    async function onDeleteClick() {
+      if (!confirm('정말로 이 게시글을 삭제하시겠습니까?')) return;
+      try {
+        await deletePost(currentPostId);
+        alert('게시글이 삭제되었습니다.');
+        window.location.href = 'news.html';
+      } catch(err) {
+        alert('삭제 실패: ' + err.message);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initDetail);
+  </script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="dark" lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>게시글 작성/수정 - 한양공인중개사사무소</title>
+  <style>
+    @layer base {
+      html, body { margin:0; padding:0; }
+      body { overscroll-behavior:none; }
+      main>:first-child { margin-top:0!important; }
+      main>:last-child { margin-bottom:0!important; }
+    }
+    ::-webkit-scrollbar { display:none; }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-dark": "#121821",
+            "on-tertiary-container": "#d2a362",
+            "on-surface-variant": "#c3c6d0",
+            "secondary": "#a6c8ff",
+            "on-primary": "#0e3159",
+            "inverse-primary": "#425f8a",
+            "tertiary": "#efbe7a",
+            "error-container": "#93000a",
+            "text-primary": "#F0F4F8",
+            "surface-container-highest": "#343538",
+            "secondary-fixed": "#d5e3ff",
+            "surface": "#121316",
+            "outline": "#8d9199",
+            "on-secondary": "#003060",
+            "on-tertiary": "#452b00",
+            "inverse-on-surface": "#2f3033",
+            "tertiary-fixed-dim": "#efbe7a",
+            "surface-container": "#1e2023",
+            "on-background": "#e3e2e6",
+            "on-error": "#690005",
+            "surface-dim": "#121316",
+            "outline-variant": "#43474e",
+            "on-secondary-container": "#8fb7f4",
+            "surface-bright": "#38393c",
+            "surface-tint": "#abc8f9",
+            "secondary-container": "#19477e",
+            "background-dark": "#0A0E14",
+            "on-secondary-fixed": "#001c3b",
+            "background": "#121316",
+            "tertiary-fixed": "#ffddb3",
+            "on-error-container": "#ffdad6",
+            "on-primary-fixed": "#001c3b",
+            "surface-variant": "#343538",
+            "surface-container-high": "#292a2d",
+            "inverse-surface": "#e3e2e6",
+            "primary-fixed": "#d5e3ff",
+            "primary-fixed-dim": "#abc8f9",
+            "surface-container-low": "#1a1c1f",
+            "secondary-fixed-dim": "#a6c8ff",
+            "on-primary-fixed-variant": "#294771",
+            "tertiary-container": "#593900",
+            "accent": "#4D80C7",
+            "surface-container-lowest": "#0d0e11",
+            "on-secondary-fixed-variant": "#19477e",
+            "on-tertiary-fixed-variant": "#614006",
+            "error": "#ffb4ab",
+            "primary-container": "#214069",
+            "on-primary-container": "#8facdc",
+            "text-secondary": "#9BA3AF",
+            "primary": "#abc8f9",
+            "on-tertiary-fixed": "#291800",
+            "on-surface": "#e3e2e6"
+          },
+          borderRadius: {
+            DEFAULT: "0.125rem",
+            lg: "0.25rem",
+            xl: "0.5rem",
+            full: "0.75rem"
+          },
+          spacing: {
+            gutter: "1.5rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            margin: "1.5rem",
+            "space-md": "1rem",
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem"
+          },
+          fontFamily: {
+            "headline-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-sm": ["Inter"],
+            "label-lg": ["Inter"],
+            "label-md": ["Inter"],
+            "body-lg": ["Inter"]
+          },
+          fontSize: {
+            "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+            "label-sm": ["10px", { lineHeight: "14px", fontWeight: "500" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+            "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "600" }],
+            "label-lg": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+            "label-md": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+            "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }]
+          }
+        }
+      }
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-surface font-body-md text-on-surface min-h-screen pb-24 md:pb-12">
+  <header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/20">
+    <div class="h-20 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="admin.html" class="flex items-center gap-2 text-primary font-headline-sm min-h-[44px]">
+          <span class="material-symbols-outlined text-headline-md">admin_panel_settings</span>
+          <span class="text-on-surface font-semibold">관리자 대시보드</span>
+        </a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="admin.html" class="text-sm text-on-surface-variant hover:text-on-surface min-h-[44px] flex items-center">대시보드로 복귀</a>
+        <a href="news.html" class="text-sm text-on-surface-variant hover:text-on-surface min-h-[44px] flex items-center">게시판 보기</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="w-full pt-28 px-6 max-w-4xl mx-auto">
+    <div class="bg-surface-container rounded-2xl p-6 md:p-10 border border-outline-variant/20 shadow-xl">
+      <div class="flex items-center justify-between pb-6 border-b border-outline-variant/20 mb-6">
+        <h1 id="page-heading" class="text-headline-md font-bold text-on-surface">새 게시글 작성</h1>
+        <a href="admin.html" class="text-sm text-outline hover:text-primary min-h-[44px] flex items-center">취소</a>
+      </div>
+
+      <form id="write-form" onsubmit="handleSubmit(event)" class="space-y-6">
+        <div>
+          <label class="block text-body-sm font-semibold text-text-secondary mb-2" for="post-category-input">카테고리</label>
+          <select id="post-category-input" required class="w-full bg-surface-container-high border border-outline-variant/40 rounded-xl px-4 py-3 text-on-surface text-body-md focus:outline-none focus:border-primary min-h-[44px]">
+            <option value="부동산 뉴스">부동산 뉴스</option>
+            <option value="재건축 이슈">재건축 이슈</option>
+            <option value="시세 분석">시세 분석</option>
+            <option value="대출·세무">대출·세무</option>
+            <option value="공지사항">공지사항</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-body-sm font-semibold text-text-secondary mb-2" for="post-title-input">제목</label>
+          <input type="text" id="post-title-input" required placeholder="게시글 제목을 입력하세요" class="w-full bg-surface-container-high border border-outline-variant/40 rounded-xl px-4 py-3 text-on-surface text-body-md focus:outline-none focus:border-primary min-h-[44px]">
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <label class="block text-body-sm font-semibold text-text-secondary" for="post-content-input">본문 내용 (마크다운 지원)</label>
+            <span class="text-xs text-outline">#, **, -, 링크, 코드블록 지원</span>
+          </div>
+          <textarea id="post-content-input" rows="14" required placeholder="마크다운 문법을 사용하여 본문을 작성해 주세요. (예: ## 소제목, - 항목, **강조**)" class="w-full bg-surface-container-high border border-outline-variant/40 rounded-xl p-4 text-on-surface text-body-md font-mono focus:outline-none focus:border-primary leading-relaxed"></textarea>
+        </div>
+
+        <div class="pt-4 flex flex-col sm:flex-row gap-4">
+          <button type="submit" id="submit-btn" class="flex-1 py-4 bg-primary text-on-primary font-semibold rounded-xl hover:bg-primary-fixed transition-colors flex items-center justify-center gap-2 shadow-lg min-h-[44px]">
+            <span class="material-symbols-outlined">save</span>
+            <span id="btn-text">게시글 저장</span>
+          </button>
+          <a href="admin.html" class="py-4 px-8 bg-surface-container-highest text-on-surface rounded-xl hover:bg-surface-bright transition-colors text-center font-medium min-h-[44px] flex items-center justify-center">
+            취소
+          </a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script src="db.js"></script>
+  <script>
+    let editPostId = null;
+
+    async function initForm() {
+      requireAdmin();
+
+      const params = new URLSearchParams(window.location.search);
+      editPostId = params.get('id');
+
+      if (editPostId) {
+        document.getElementById('page-heading').textContent = '게시글 수정';
+        document.getElementById('btn-text').textContent = '수정사항 저장';
+        const post = await getPostById(editPostId);
+        if (post) {
+          document.getElementById('post-category-input').value = post.category || '부동산 뉴스';
+          document.getElementById('post-title-input').value = post.title || '';
+          document.getElementById('post-content-input').value = post.content || '';
+        }
+      }
+    }
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submit-btn');
+      const category = document.getElementById('post-category-input').value.trim();
+      const title = document.getElementById('post-title-input').value.trim();
+      const content = document.getElementById('post-content-input').value.trim();
+
+      if (!title || !content) {
+        alert('제목과 내용을 모두 입력해 주세요.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-50');
+
+      try {
+        if (editPostId) {
+          await updatePost(editPostId, { title, category, content });
+          alert('게시글이 성공적으로 수정되었습니다.');
+        } else {
+          await createPost({ title, category, content });
+          alert('새 게시글이 성공적으로 등록되었습니다.');
+        }
+        window.location.href = 'admin.html';
+      } catch(err) {
+        alert('저장 실패: ' + err.message);
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-50');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initForm);
+  </script>
+</body>
+</html>

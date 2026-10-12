@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html class="dark" lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>매물안내 - 한양공인중개사사무소</title>
+  <style>
+    @layer base {
+      html, body { margin:0; padding:0; }
+      body { overscroll-behavior:none; }
+      main>:first-child { margin-top:0!important; }
+      main>:last-child { margin-bottom:0!important; }
+    }
+    ::-webkit-scrollbar { display:none; }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-dark": "#121821",
+            "on-tertiary-container": "#d2a362",
+            "on-surface-variant": "#c3c6d0",
+            "secondary": "#a6c8ff",
+            "on-primary": "#0e3159",
+            "inverse-primary": "#425f8a",
+            "tertiary": "#efbe7a",
+            "error-container": "#93000a",
+            "text-primary": "#F0F4F8",
+            "surface-container-highest": "#343538",
+            "secondary-fixed": "#d5e3ff",
+            "surface": "#121316",
+            "outline": "#8d9199",
+            "on-secondary": "#003060",
+            "on-tertiary": "#452b00",
+            "inverse-on-surface": "#2f3033",
+            "tertiary-fixed-dim": "#efbe7a",
+            "surface-container": "#1e2023",
+            "on-background": "#e3e2e6",
+            "on-error": "#690005",
+            "surface-dim": "#121316",
+            "outline-variant": "#43474e",
+            "on-secondary-container": "#8fb7f4",
+            "surface-bright": "#38393c",
+            "surface-tint": "#abc8f9",
+            "secondary-container": "#19477e",
+            "background-dark": "#0A0E14",
+            "on-secondary-fixed": "#001c3b",
+            "background": "#121316",
+            "tertiary-fixed": "#ffddb3",
+            "on-error-container": "#ffdad6",
+            "on-primary-fixed": "#001c3b",
+            "surface-variant": "#343538",
+            "surface-container-high": "#292a2d",
+            "inverse-surface": "#e3e2e6",
+            "primary-fixed": "#d5e3ff",
+            "primary-fixed-dim": "#abc8f9",
+            "surface-container-low": "#1a1c1f",
+            "secondary-fixed-dim": "#a6c8ff",
+            "on-primary-fixed-variant": "#294771",
+            "tertiary-container": "#593900",
+            "accent": "#4D80C7",
+            "surface-container-lowest": "#0d0e11",
+            "on-secondary-fixed-variant": "#19477e",
+            "on-tertiary-fixed-variant": "#614006",
+            "error": "#ffb4ab",
+            "primary-container": "#214069",
+            "on-primary-container": "#8facdc",
+            "text-secondary": "#9BA3AF",
+            "primary": "#abc8f9",
+            "on-tertiary-fixed": "#291800",
+            "on-surface": "#e3e2e6"
+          },
+          borderRadius: {
+            DEFAULT: "0.125rem",
+            lg: "0.25rem",
+            xl: "0.5rem",
+            full: "0.75rem"
+          },
+          spacing: {
+            gutter: "1.5rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            margin: "1.5rem",
+            "space-md": "1rem",
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem"
+          },
+          fontFamily: {
+            "headline-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-sm": ["Inter"],
+            "label-lg": ["Inter"],
+            "label-md": ["Inter"],
+            "body-lg": ["Inter"]
+          },
+          fontSize: {
+            "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+            "label-sm": ["10px", { lineHeight: "14px", fontWeight: "500" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+            "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "600" }],
+            "label-lg": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+            "label-md": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+            "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }]
+          }
+        }
+      }
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-surface font-body-md text-on-surface pb-16 md:pb-0">
+  <header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+    <div class="h-20 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary text-headline-md">apartment</span>
+        <span class="font-headline-sm tracking-tight text-on-surface">한양공인중개사사무소 <span class="text-xs text-text-secondary font-normal">(금곡동)</span></span>
+      </a>
+      <nav class="hidden md:flex items-center gap-space-xl">
+        <a class="text-sm text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm min-h-[44px] flex items-center" href="index.html">홈</a>
+        <a class="text-sm text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm min-h-[44px] flex items-center" href="news.html">실거래가&amp;뉴스</a>
+        <a aria-current="page" class="transition-colors py-space-xs px-space-sm bg-primary-container text-on-primary-container font-semibold rounded-lg min-h-[44px] flex items-center" href="properties.html">매물안내</a>
+        <a class="text-sm text-on-surface-variant hover:text-on-surface transition-colors py-space-xs px-space-sm min-h-[44px] flex items-center" href="location.html">오시는길</a>
+      </nav>
+      <div class="flex items-center gap-4">
+        <a class="flex items-center gap-2 bg-primary-container text-on-primary-container px-space-md py-space-sm rounded-lg hover:bg-primary hover:text-on-primary transition-all font-label-md min-h-[44px]" href="tel:031-713-8822">
+          <span class="material-symbols-outlined text-sm">call</span>
+          <span>031-713-8822</span>
+        </a>
+        <img alt="Profile" class="w-10 h-10 rounded-full object-cover hidden sm:block border border-outline-variant" src="agent.jpg">
+      </div>
+    </div>
+  </header>
+
+  <main class="w-full pt-20 bg-surface min-h-[80vh]">
+    <div class="flex flex-col w-full text-on-surface">
+      <div class="max-w-7xl mx-auto w-full px-6 lg:px-12 py-12">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
+          <div>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-3 py-1 bg-primary-container text-on-primary-container rounded-full text-label-md font-label-md tracking-wider uppercase">verified listings</span>
+              <span class="text-text-secondary text-body-sm">실시간 업데이트된 안전 매물</span>
+            </div>
+            <h1 class="text-headline-lg font-headline-lg text-on-surface tracking-tight">금곡동 &amp; 분당 프리미엄 매물안내</h1>
+            <p class="text-body-lg text-on-surface-variant mt-2 max-w-2xl">
+              청솔주공9단지를 비롯한 분당 핵심 지역의 엄선된 아파트 및 상가 매물을 확인하세요. 신뢰할 수 있는 실거래가 기반으로 중개합니다.
+            </p>
+          </div>
+          <div class="flex items-center gap-3">
+            <a class="flex items-center gap-3 bg-primary text-on-primary px-6 py-3.5 rounded-xl hover:bg-primary-container hover:text-on-primary-container transition-all shadow-lg font-label-lg min-h-[44px]" href="tel:031-713-8822">
+              <span class="material-symbols-outlined text-xl">phone_in_talk</span>
+              <span>전화로 매물 문의하기 (031-713-8822)</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="bg-surface-container-low p-6 rounded-xl mb-12 shadow-sm">
+          <div class="flex flex-col lg:flex-row gap-6 justify-between items-center">
+            <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto" id="filter-tabs">
+              <button class="filter-btn active px-5 py-2.5 rounded-lg text-label-lg font-label-md transition-all bg-primary text-on-primary shadow-sm min-h-[44px]" onclick="filterListings('all')">전체 매물</button>
+              <button class="filter-btn px-5 py-2.5 rounded-lg text-label-lg font-label-md transition-all bg-surface-container text-on-surface-variant hover:text-on-surface min-h-[44px]" onclick="filterListings('매매')">매매</button>
+              <button class="filter-btn px-5 py-2.5 rounded-lg text-label-lg font-label-md transition-all bg-surface-container text-on-surface-variant hover:text-on-surface min-h-[44px]" onclick="filterListings('전세')">전세</button>
+              <button class="filter-btn px-5 py-2.5 rounded-lg text-label-lg font-label-md transition-all bg-surface-container text-on-surface-variant hover:text-on-surface min-h-[44px]" onclick="filterListings('월세')">월세</button>
+            </div>
+            <div class="flex flex-wrap items-center gap-4 w-full lg:w-auto justify-end">
+              <div class="relative flex-1 sm:w-72">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+                <input class="w-full bg-surface-container text-on-surface pl-10 pr-4 py-2.5 rounded-lg text-body-md focus:outline-none focus:ring-2 focus:ring-primary transition-all min-h-[44px]" id="searchInput" placeholder="아파트 이름, 단지명 검색..." type="text">
+              </div>
+              <select class="bg-surface-container text-on-surface px-4 py-2.5 rounded-lg text-body-md focus:outline-none focus:ring-2 focus:ring-primary transition-all min-h-[44px]" id="sortSelect">
+                <option value="latest">최신 등록순</option>
+                <option value="price-asc">낮은 가격순</option>
+                <option value="price-desc">높은 가격순</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="listingsGrid">
+          <div class="property-card bg-surface-container-low rounded-xl overflow-hidden shadow-md flex flex-col justify-between group hover:translate-y-[-4px] transition-all duration-300" data-price="95000" data-title="청솔주공9단지 아파트 59㎡ 매매" data-type="매매">
+            <div class="relative h-56 overflow-hidden">
+              <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAbw7Paqh3AYAIDGdtQJqxQPbFO9IhhlwMA3Ttx7j63bOMHBXHQGzQqFmhrwosSHRTY2Wgwc4tQQC307d47M9R69BLN0C_MCd_Vx0OZOXLrFvXKBBP94w54GonsC3Ug9hsQNbLmz7ka71u9fvTkW4GYaFm5HqSECgWL57qtJrry_6C2iuS3wpTmIAii_i92l3SL2r0lCCnqiOkcRK8jcfdBZrCS14JO_K0eF7bpEm4OjC5HGhgp84fM');"></div>
+              <div class="absolute top-3 left-3 flex gap-2">
+                <span class="px-3 py-1 bg-primary text-on-primary rounded-lg text-label-md font-label-md shadow">매매</span>
+                <span class="px-3 py-1 bg-surface-dark/80 backdrop-blur text-on-surface rounded-lg text-label-md font-label-md">즉시입주가능</span>
+              </div>
+            </div>
+            <div class="p-6 flex flex-col flex-grow justify-between">
+              <div>
+                <div class="text-text-secondary text-body-sm mb-1">금곡동 · 청솔주공9단지</div>
+                <h3 class="text-headline-sm font-headline-sm text-on-surface mb-2">59㎡ (방 3 / 욕실 1)</h3>
+                <div class="text-headline-md font-headline-md text-primary mb-4">9억 5,000만원 <span class="text-body-sm text-text-secondary font-normal">/ 중층</span></div>
+                <div class="grid grid-cols-3 gap-2 py-3 border-y border-outline-variant/30 mb-4 text-center">
+                  <div><div class="text-text-secondary text-label-sm">전용면적</div><div class="text-on-surface text-body-sm font-semibold">59.8㎡</div></div>
+                  <div><div class="text-text-secondary text-label-sm">해당층/총층</div><div class="text-on-surface text-body-sm font-semibold">12층/15층</div></div>
+                  <div><div class="text-text-secondary text-label-sm">방향</div><div class="text-on-surface text-body-sm font-semibold">남향</div></div>
+                </div>
+                <p class="text-body-sm text-on-surface-variant line-clamp-2 mb-4">올수리 완료된 초역세권 단지입니다. 미금역 도보 5분 거리로 대중교통 및 학군이 매우 우수합니다.</p>
+              </div>
+              <div class="flex items-center gap-3 pt-2">
+                <button class="flex-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface py-2.5 rounded-lg text-label-lg font-label-md transition-colors text-center min-h-[44px]" onclick="openDetailModal('청솔주공9단지', '59㎡ 매매', '9억 5,000만원', '방 3 / 욕실 1', '12층 (남향)', '즉시입주 가능', '올수리 완료, 미금역 초역세권, 판상형 구조')">상세보기</button>
+                <a class="flex items-center justify-center bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary p-2.5 rounded-lg transition-colors min-h-[44px] min-w-[44px]" href="tel:031-713-8822">
+                  <span class="material-symbols-outlined text-xl">call</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="property-card bg-surface-container-low rounded-xl overflow-hidden shadow-md flex flex-col justify-between group hover:translate-y-[-4px] transition-all duration-300" data-price="62000" data-title="청솔주공9단지 전세 49㎡" data-type="전세">
+            <div class="relative h-56 overflow-hidden">
+              <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA7JZR0brz-PD5L_tdeM_B8oOuNC-OkljF2Hl28stiAojrQuGfyf_Vtx_DzTwnHurKGfHWufiXAMLiu2RZ3JA8s1-fSCZ2tmLTsN_nrlXSQnyc6wOAkfyXqUOvHXgeWhxCAeTRW_iFNbZNvOJUso0AwXzYvpSphgw7dZwbattJb2gQu2Dv3sHX9nnHlbBkgXhPb-S1er8T0pmu6p4L8yU5tzq-tCsWHb6kASbs245LMD8zvbPTchdNo');"></div>
+              <div class="absolute top-3 left-3 flex gap-2">
+                <span class="px-3 py-1 bg-secondary text-on-secondary rounded-lg text-label-md font-label-md shadow">전세</span>
+                <span class="px-3 py-1 bg-surface-dark/80 backdrop-blur text-on-surface rounded-lg text-label-md font-label-md">협의입주</span>
+              </div>
+            </div>
+            <div class="p-6 flex flex-col flex-grow justify-between">
+              <div>
+                <div class="text-text-secondary text-body-sm mb-1">금곡동 · 청솔주공9단지</div>
+                <h3 class="text-headline-sm font-headline-sm text-on-surface mb-2">49㎡ (방 2 / 욕실 1)</h3>
+                <div class="text-headline-md font-headline-md text-primary mb-4">6억 2,000만원 <span class="text-body-sm text-text-secondary font-normal">/ 고층</span></div>
+                <div class="grid grid-cols-3 gap-2 py-3 border-y border-outline-variant/30 mb-4 text-center">
+                  <div><div class="text-text-secondary text-label-sm">전용면적</div><div class="text-on-surface text-body-sm font-semibold">49.5㎡</div></div>
+                  <div><div class="text-text-secondary text-label-sm">해당층/총층</div><div class="text-on-surface text-body-sm font-semibold">15층/15층</div></div>
+                  <div><div class="text-text-secondary text-label-sm">방향</div><div class="text-on-surface text-body-sm font-semibold">동향</div></div>
+                </div>
+                <p class="text-body-sm text-on-surface-variant line-clamp-2 mb-4">탑층으로 층간소음 없이 조용하며 전망이 탁 트여 있습니다. 내부 도배 및 장판 새로 시공했습니다.</p>
+              </div>
+              <div class="flex items-center gap-3 pt-2">
+                <button class="flex-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface py-2.5 rounded-lg text-label-lg font-label-md transition-colors text-center min-h-[44px]" onclick="openDetailModal('청솔주공9단지', '49㎡ 전세', '6억 2,000만원', '방 2 / 욕실 1', '15층 탑층 (동향)', '협의입주 가능', '탑층 조망권 우수, 내부 깨끗함, 대출 가능')">상세보기</button>
+                <a class="flex items-center justify-center bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary p-2.5 rounded-lg transition-colors min-h-[44px] min-w-[44px]" href="tel:031-713-8822">
+                  <span class="material-symbols-outlined text-xl">call</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="property-card bg-surface-container-low rounded-xl overflow-hidden shadow-md flex flex-col justify-between group hover:translate-y-[-4px] transition-all duration-300" data-price="125000" data-title="분당 금곡동 프리미엄 상가 매매" data-type="매매">
+            <div class="relative h-56 overflow-hidden">
+              <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB0R6MXbVzJwyb3szzWABwDxh-p42XCbZgIDASbopnGOcNephVUd4n-6VidPEqSLXL77SBDvyYSgQ6l4Uh8J1ARGtaPWS6uwRsGOCAgP3d902mcf7By_2NZA5otbP3jPFTPYn7w2NP7XFUIJ8z4nM-jh0IpTrElkSYHit-B0RRSooSwHeE41N3PqHpm7ZqqjkAE7RPU5UP0wZysyUkT--cNKdHAEyUXU7FyQ7Fv2u0OMH7HmMs8Jxbl');"></div>
+              <div class="absolute top-3 left-3 flex gap-2">
+                <span class="px-3 py-1 bg-primary text-on-primary rounded-lg text-label-md font-label-md shadow">매매</span>
+                <span class="px-3 py-1 bg-surface-dark/80 backdrop-blur text-on-surface rounded-lg text-label-md font-label-md">상가전문</span>
+              </div>
+            </div>
+            <div class="p-6 flex flex-col flex-grow justify-between">
+              <div>
+                <div class="text-text-secondary text-body-sm mb-1">금곡동 · 메인 상권</div>
+                <h3 class="text-headline-sm font-headline-sm text-on-surface mb-2">상가 1층 대형 점포</h3>
+                <div class="text-headline-md font-headline-md text-primary mb-4">12억 5,000만원 <span class="text-body-sm text-text-secondary font-normal">/ 1층</span></div>
+                <div class="grid grid-cols-3 gap-2 py-3 border-y border-outline-variant/30 mb-4 text-center">
+                  <div><div class="text-text-secondary text-label-sm">계약면적</div><div class="text-on-surface text-body-sm font-semibold">112.4㎡</div></div>
+                  <div><div class="text-text-secondary text-label-sm">해당층</div><div class="text-on-surface text-body-sm font-semibold">1층 전면</div></div>
+                  <div><div class="text-text-secondary text-label-sm">수익률</div><div class="text-on-surface text-body-sm font-semibold">연 5.2%</div></div>
+                </div>
+                <p class="text-body-sm text-on-surface-variant line-clamp-2 mb-4">유동인구 풍부한 대로변 1층 상가 매물입니다. 유명 프랜차이즈 장기 임대 확정되어 안정적인 월세 수익 가능합니다.</p>
+              </div>
+              <div class="flex items-center gap-3 pt-2">
+                <button class="flex-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface py-2.5 rounded-lg text-label-lg font-label-md transition-colors text-center min-h-[44px]" onclick="openDetailModal('금곡동 메인상권', '1층 상가 매매', '12억 5,000만원', '상가 전용 (욕실 1)', '1층 대로변', '즉시승계 가능', '임대완료, 안정적 수익형, 대단지 배후수요')">상세보기</button>
+                <a class="flex items-center justify-center bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary p-2.5 rounded-lg transition-colors min-h-[44px] min-w-[44px]" href="tel:031-713-8822">
+                  <span class="material-symbols-outlined text-xl">call</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hidden text-center py-24" id="noResults">
+          <span class="material-symbols-outlined text-6xl text-outline mb-4">search_off</span>
+          <h3 class="text-headline-md font-headline-md text-on-surface mb-2">검색 결과가 없습니다</h3>
+          <p class="text-body-md text-on-surface-variant">다른 검색어를 입력하시거나 필터를 변경해 주세요.</p>
+        </div>
+      </div>
+
+      <div class="fixed inset-0 z-50 bg-surface-dark/80 backdrop-blur-sm hidden items-center justify-center p-4" id="propertyModal">
+        <div class="bg-surface-container-high rounded-2xl max-w-lg w-full p-8 shadow-2xl relative border border-outline-variant/30">
+          <button class="absolute top-6 right-6 text-on-surface-variant hover:text-on-surface" onclick="closeDetailModal()">
+            <span class="material-symbols-outlined text-2xl">close</span>
+          </button>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="px-2.5 py-1 bg-primary text-on-primary rounded text-label-sm font-label-md" id="modalCategory">매물상세</span>
+            <span class="text-text-secondary text-body-sm" id="modalLocation">금곡동</span>
+          </div>
+          <h2 class="text-headline-md font-headline-md text-on-surface mb-4" id="modalTitle">매물 상세 정보</h2>
+          <div class="text-headline-lg font-headline-lg text-primary mb-6" id="modalPrice">가격 정보</div>
+          <div class="space-y-4 bg-surface-container p-5 rounded-xl mb-6">
+            <div class="flex justify-between items-center border-b border-outline-variant/20 pb-3">
+              <span class="text-on-surface-variant text-body-md">평면도/구조</span>
+              <span class="text-on-surface text-body-md font-semibold" id="modalRooms">-</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-outline-variant/20 pb-3">
+              <span class="text-on-surface-variant text-body-md">층수/방향</span>
+              <span class="text-on-surface text-body-md font-semibold" id="modalFloor">-</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-outline-variant/20 pb-3">
+              <span class="text-on-surface-variant text-body-md">입주 가능일</span>
+              <span class="text-on-surface text-body-md font-semibold" id="modalMoveIn">-</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-on-surface-variant text-body-md">특징 및 옵션</span>
+              <span class="text-on-surface text-body-sm text-right font-semibold" id="modalFeatures">-</span>
+            </div>
+          </div>
+          <p class="text-body-sm text-on-surface-variant mb-6 text-center">
+            * 정확한 동·호수 및 현장 방문 예약은 전화 상담을 통해 친절히 안내해 드립니다.
+          </p>
+          <div class="flex gap-4">
+            <button class="flex-1 bg-surface-container py-3 rounded-xl text-on-surface text-label-lg font-label-md hover:bg-surface-container-highest transition-colors min-h-[44px]" onclick="closeDetailModal()">닫기</button>
+            <a class="flex-1 flex items-center justify-center gap-2 bg-primary text-on-primary py-3 rounded-xl text-label-lg font-label-md hover:bg-primary-container hover:text-on-primary-container transition-all shadow-lg min-h-[44px]" href="tel:031-713-8822">
+              <span class="material-symbols-outlined">call</span>
+              <span>전화 문의하기</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="w-full bg-surface-container-low py-space-xl">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-space-md text-on-surface-variant text-body-sm">
+      <div>
+        <p class="font-semibold text-on-surface">한양공인중개사사무소(금곡동)</p>
+        <p>경기도 성남시 분당구 금곡동 133-2 청솔주공9단지 아파트 단지내상가 107호 | 대표: 이춘권 | 등록번호: 제41135-2018-00141호</p>
+      </div>
+      <div class="flex flex-col md:items-end gap-1">
+        <p>전화: 031-713-8822</p>
+        <p>© Hanyang Real Estate. All rights reserved.</p>
+        <a id="agent-login-btn" href="admin.html" class="text-xs text-outline hover:text-primary transition-colors mt-2 inline-flex items-center gap-1 min-h-[44px]">
+          <span class="material-symbols-outlined text-sm">lock</span> Agent Login
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-surface-container-high/95 backdrop-blur-md border-t border-outline-variant/30 flex justify-around items-center h-16 px-2">
+    <a href="index.html" class="flex flex-col items-center justify-center flex-1 py-1 text-on-surface-variant hover:text-on-surface min-h-[44px]">
+      <span class="material-symbols-outlined text-xl">home</span>
+      <span class="text-[11px] font-medium mt-0.5">홈</span>
+    </a>
+    <a href="news.html" class="flex flex-col items-center justify-center flex-1 py-1 text-on-surface-variant hover:text-on-surface min-h-[44px]">
+      <span class="material-symbols-outlined text-xl">newspaper</span>
+      <span class="text-[11px] font-medium mt-0.5">실거래/뉴스</span>
+    </a>
+    <a href="properties.html" class="flex flex-col items-center justify-center flex-1 py-1 text-primary min-h-[44px]">
+      <span class="material-symbols-outlined text-xl">domain</span>
+      <span class="text-[11px] font-medium mt-0.5">매물</span>
+    </a>
+    <a href="location.html" class="flex flex-col items-center justify-center flex-1 py-1 text-on-surface-variant hover:text-on-surface min-h-[44px]">
+      <span class="material-symbols-outlined text-xl">pin_drop</span>
+      <span class="text-[11px] font-medium mt-0.5">오시는길</span>
+    </a>
+    <a href="tel:031-713-8822" class="flex flex-col items-center justify-center flex-1 py-1 text-secondary min-h-[44px]">
+      <span class="material-symbols-outlined text-xl">call</span>
+      <span class="text-[11px] font-medium mt-0.5">전화</span>
+    </a>
+  </nav>
+
+  <script>
+    let currentFilter = 'all';
+
+    function filterListings(type) {
+      currentFilter = type;
+      const buttons = document.querySelectorAll('#filter-tabs button');
+      buttons.forEach(btn => {
+        if(btn.textContent.includes(type) || (type === 'all' && btn.textContent.includes('전체'))) {
+          btn.className = 'filter-btn px-5 py-2.5 rounded-lg text-label-lg font-label-md transition-all bg-primary text-on-primary shadow-sm min-h-[44px]';
+        } else {
+          btn.className = 'filter-btn px-5 py-2.5 rounded-lg text-label-lg font-label-md transition-all bg-surface-container text-on-surface-variant hover:text-on-surface min-h-[44px]';
+        }
+      });
+      applyFilters();
+    }
+
+    const searchInput = document.getElementById('searchInput');
+    const sortSelect = document.getElementById('sortSelect');
+    if (searchInput) searchInput.addEventListener('input', applyFilters);
+    if (sortSelect) sortSelect.addEventListener('change', applyFilters);
+
+    function applyFilters() {
+      const query = (searchInput?.value || '').toLowerCase();
+      const sortValue = sortSelect?.value || 'latest';
+      const grid = document.getElementById('listingsGrid');
+      const cards = Array.from(grid.getElementsByClassName('property-card'));
+      const noResults = document.getElementById('noResults');
+
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const type = card.getAttribute('data-type');
+        const title = card.getAttribute('data-title').toLowerCase();
+        const matchesType = (currentFilter === 'all' || type === currentFilter);
+        const matchesSearch = title.includes(query);
+
+        if (matchesType && matchesSearch) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      cards.sort((a, b) => {
+        const priceA = parseInt(a.getAttribute('data-price'));
+        const priceB = parseInt(b.getAttribute('data-price'));
+        if (sortValue === 'price-asc') return priceA - priceB;
+        if (sortValue === 'price-desc') return priceB - priceA;
+        return 0;
+      });
+
+      cards.forEach(card => grid.appendChild(card));
+      if (visibleCount === 0) noResults.classList.remove('hidden');
+      else noResults.classList.add('hidden');
+    }
+
+    function openDetailModal(location, title, price, rooms, floor, moveIn, features) {
+      document.getElementById('modalCategory').textContent = title;
+      document.getElementById('modalLocation').textContent = location;
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalPrice').textContent = price;
+      document.getElementById('modalRooms').textContent = rooms;
+      document.getElementById('modalFloor').textContent = floor;
+      document.getElementById('modalMoveIn').textContent = moveIn;
+      document.getElementById('modalFeatures').textContent = features;
+
+      const modal = document.getElementById('propertyModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeDetailModal() {
+      const modal = document.getElementById('propertyModal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+
+    document.getElementById('propertyModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'propertyModal') closeDetailModal();
+    });
+  </script>
+</body>
+</html>
