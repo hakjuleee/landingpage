@@ -2,5 +2,6 @@
   "github_token": "YOUR_GITHUB_TOKEN",
   "github_owner": "hakjuleee",
   "github_repo": "landingpage",
-  "data_file_path": "data/posts.json"
+  "data_file_path": "data/posts.json",
+  "admin_password": "6429"
 }
