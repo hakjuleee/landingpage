@@ -27,4 +27,7 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
+User-agent: Yeti
+Allow: /
+
 Sitemap: https://landingpage-zeta-lilac.vercel.app/sitemap.xml
