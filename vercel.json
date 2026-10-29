@@ -1,11 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    {
-      "source": "/google02d1ca4de3695d0c.html",
-      "destination": "/google02d1ca4de3695d0c.html"
-    }
+    { "source": "/news", "destination": "/news.html" },
+    { "source": "/properties", "destination": "/properties.html" },
+    { "source": "/location", "destination": "/location.html" },
+    { "source": "/admin", "destination": "/admin.html" }
   ]
 }
