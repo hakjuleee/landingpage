@@ -125,19 +125,22 @@
         <span class="font-headline-sm tracking-tight text-on-surface">한양공인중개사사무소 <span class="text-xs text-text-secondary font-normal">(관리자)</span></span>
       </a>
       <div class="flex items-center gap-4">
-        <a href="index.html" class="text-sm text-on-surface-variant hover:text-on-surface min-h-[44px] flex items-center">홈페이지 바로가기</a>
+        <a href="properties.html" class="text-sm text-on-surface-variant hover:text-on-surface min-h-[44px] hidden sm:flex items-center">매물안내 보기</a>
+        <a href="news.html" class="text-sm text-on-surface-variant hover:text-on-surface min-h-[44px] hidden sm:flex items-center">뉴스 보기</a>
+        <a href="index.html" class="text-sm text-primary hover:underline min-h-[44px] flex items-center">홈페이지 바로가기</a>
       </div>
     </div>
   </header>
 
   <main class="w-full pt-28 px-6 max-w-6xl mx-auto">
+    <!-- 로그인 폼 -->
     <div id="login-section" class="max-w-md mx-auto mt-12 bg-surface-container rounded-2xl p-8 border border-outline-variant/20 shadow-2xl">
       <div class="text-center mb-6">
         <div class="w-14 h-14 bg-primary-container text-on-primary-container rounded-2xl mx-auto flex items-center justify-center mb-3">
           <span class="material-symbols-outlined text-3xl">lock</span>
         </div>
         <h1 class="text-headline-md font-bold text-on-surface">관리자 로그인</h1>
-        <p class="text-body-sm text-text-secondary mt-1">게시판 관리 비밀번호를 입력해 주세요.</p>
+        <p class="text-body-sm text-text-secondary mt-1">관리자 비밀번호를 입력해 주세요.</p>
       </div>
 
       <form onsubmit="handleLogin(event)" class="space-y-4">
@@ -152,51 +155,265 @@
       </form>
     </div>
 
-    <div id="dashboard-section" class="hidden flex-col gap-8">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-outline-variant/20">
-        <div>
-          <h1 class="text-headline-lg font-bold text-on-surface">게시글 관리</h1>
-          <p class="text-body-sm text-text-secondary mt-1">새 글을 작성하거나 등록된 게시글을 수정 및 삭제할 수 있습니다.</p>
-        </div>
-        <div class="flex items-center gap-3">
-          <a href="news-write.html" class="px-5 py-2.5 bg-primary text-on-primary font-semibold rounded-xl hover:bg-primary-fixed transition-colors flex items-center gap-2 shadow-md min-h-[44px]">
-            <span class="material-symbols-outlined text-base">edit</span> 새 글 작성
-          </a>
-          <button onclick="handleLogout()" class="px-4 py-2.5 bg-surface-container-high hover:bg-surface-bright text-on-surface rounded-xl transition-colors text-sm font-medium min-h-[44px]">
-            로그아웃
+    <!-- 대시보드 섹션 -->
+    <div id="dashboard-section" class="hidden flex-col gap-6">
+      <!-- 상단 탭 전환 바 -->
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-4 border-b border-outline-variant/20">
+        <div class="flex items-center gap-2 bg-surface-container p-1 rounded-xl border border-outline-variant/20">
+          <button id="tab-btn-properties" onclick="switchTab('properties')" class="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all bg-primary text-on-primary shadow-sm min-h-[40px]">
+            <span class="material-symbols-outlined text-base">domain</span>
+            <span>매물 관리 (매매·전세·월세)</span>
           </button>
+          <button id="tab-btn-news" onclick="switchTab('news')" class="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all text-on-surface-variant hover:text-on-surface min-h-[40px]">
+            <span class="material-symbols-outlined text-base">newspaper</span>
+            <span>실거래가 &amp; 뉴스 관리</span>
+          </button>
+        </div>
+        <button onclick="handleLogout()" class="px-4 py-2 bg-surface-container-high hover:bg-surface-bright text-on-surface rounded-xl transition-colors text-sm font-medium min-h-[40px] flex items-center justify-center gap-1">
+          <span class="material-symbols-outlined text-sm">logout</span> 로그아웃
+        </button>
+      </div>
+
+      <!-- ==================== TAB 1: 매물 관리 ==================== -->
+      <div id="tab-content-properties" class="flex flex-col gap-6">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h1 class="text-headline-lg font-bold text-on-surface flex items-center gap-2">
+              <span>매물 관리</span>
+              <span id="properties-count-badge" class="text-xs px-2.5 py-0.5 rounded-full bg-primary-container text-on-primary-container font-medium">0건</span>
+            </h1>
+            <p class="text-body-sm text-text-secondary mt-1">홈페이지 '매물안내' 페이지에 노출되는 아파트, 상가 매물을 추가, 수정, 삭제합니다.</p>
+          </div>
+          <button onclick="openPropertyModal()" class="px-5 py-2.5 bg-primary text-on-primary font-semibold rounded-xl hover:bg-primary-fixed transition-colors flex items-center gap-2 shadow-md min-h-[44px]">
+            <span class="material-symbols-outlined text-base">add_circle</span> 새 매물 등록
+          </button>
+        </div>
+
+        <!-- 매물 필터 탭 -->
+        <div class="flex items-center gap-2">
+          <button onclick="filterPropertiesTable('all')" id="prop-filter-all" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-primary text-on-primary transition-all">전체</button>
+          <button onclick="filterPropertiesTable('매매')" id="prop-filter-매매" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-surface-container text-on-surface-variant hover:text-on-surface transition-all">매매</button>
+          <button onclick="filterPropertiesTable('전세')" id="prop-filter-전세" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-surface-container text-on-surface-variant hover:text-on-surface transition-all">전세</button>
+          <button onclick="filterPropertiesTable('월세')" id="prop-filter-월세" class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-surface-container text-on-surface-variant hover:text-on-surface transition-all">월세</button>
+        </div>
+
+        <div class="bg-surface-container rounded-2xl overflow-hidden border border-outline-variant/20 shadow-md">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-surface-container-high text-text-secondary text-label-md border-b border-outline-variant/20">
+                  <th class="py-4 px-4 font-medium w-16 text-center">번호</th>
+                  <th class="py-4 px-4 font-medium w-24 text-center">거래유형</th>
+                  <th class="py-4 px-4 font-medium w-24">분류</th>
+                  <th class="py-4 px-4 font-medium w-44">위치/단지명</th>
+                  <th class="py-4 px-4 font-medium">매물명/제목</th>
+                  <th class="py-4 px-4 font-medium w-40">가격</th>
+                  <th class="py-4 px-4 font-medium w-28 text-center">등록일</th>
+                  <th class="py-4 px-4 font-medium w-36 text-center">관리</th>
+                </tr>
+              </thead>
+              <tbody id="properties-table-body" class="divide-y divide-outline-variant/10 text-body-md text-on-surface"></tbody>
+            </table>
+          </div>
+          <div id="empty-properties-msg" class="hidden text-center py-16 text-text-secondary text-body-md">
+            등록된 매물이 없습니다. 상단의 '+ 새 매물 등록' 버튼을 눌러 등록해 주세요.
+          </div>
         </div>
       </div>
 
-      <div class="bg-surface-container rounded-2xl overflow-hidden border border-outline-variant/20 shadow-md">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse">
-            <thead>
-              <tr class="bg-surface-container-high text-text-secondary text-label-md border-b border-outline-variant/20">
-                <th class="py-4 px-6 font-medium w-16 text-center">번호</th>
-                <th class="py-4 px-6 font-medium w-28">카테고리</th>
-                <th class="py-4 px-6 font-medium">제목</th>
-                <th class="py-4 px-6 font-medium w-32">작성일</th>
-                <th class="py-4 px-6 font-medium w-36 text-center">관리</th>
-              </tr>
-            </thead>
-            <tbody id="posts-table-body" class="divide-y divide-outline-variant/10 text-body-md text-on-surface"></tbody>
-          </table>
+      <!-- ==================== TAB 2: 뉴스 & 실거래가 관리 ==================== -->
+      <div id="tab-content-news" class="hidden flex-col gap-6">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h1 class="text-headline-lg font-bold text-on-surface">실거래가 &amp; 뉴스 관리</h1>
+            <p class="text-body-sm text-text-secondary mt-1">새 소식을 작성하거나 등록된 게시글을 수정 및 삭제할 수 있습니다.</p>
+          </div>
+          <a href="news-write.html" class="px-5 py-2.5 bg-primary text-on-primary font-semibold rounded-xl hover:bg-primary-fixed transition-colors flex items-center gap-2 shadow-md min-h-[44px]">
+            <span class="material-symbols-outlined text-base">edit</span> 새 글 작성
+          </a>
         </div>
-        <div id="empty-dashboard-msg" class="hidden text-center py-16 text-text-secondary text-body-md">
-          작성된 게시글이 없습니다.
+
+        <div class="bg-surface-container rounded-2xl overflow-hidden border border-outline-variant/20 shadow-md">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-surface-container-high text-text-secondary text-label-md border-b border-outline-variant/20">
+                  <th class="py-4 px-6 font-medium w-16 text-center">번호</th>
+                  <th class="py-4 px-6 font-medium w-28">카테고리</th>
+                  <th class="py-4 px-6 font-medium">제목</th>
+                  <th class="py-4 px-6 font-medium w-32">작성일</th>
+                  <th class="py-4 px-6 font-medium w-36 text-center">관리</th>
+                </tr>
+              </thead>
+              <tbody id="posts-table-body" class="divide-y divide-outline-variant/10 text-body-md text-on-surface"></tbody>
+            </table>
+          </div>
+          <div id="empty-dashboard-msg" class="hidden text-center py-16 text-text-secondary text-body-md">
+            작성된 게시글이 없습니다.
+          </div>
         </div>
       </div>
     </div>
   </main>
 
+  <!-- ==================== 매물 등록/수정 모달 ==================== -->
+  <div id="property-modal" class="fixed inset-0 z-50 bg-surface-dark/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-surface-container-high rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative border border-outline-variant/30 my-8">
+      <button onclick="closePropertyModal()" class="absolute top-6 right-6 text-on-surface-variant hover:text-on-surface">
+        <span class="material-symbols-outlined text-2xl">close</span>
+      </button>
+
+      <div class="flex items-center gap-2 mb-2">
+        <span class="material-symbols-outlined text-primary text-2xl">real_estate_agent</span>
+        <h2 id="property-modal-title" class="text-headline-md font-bold text-on-surface">새 매물 등록</h2>
+      </div>
+      <p class="text-body-sm text-text-secondary mb-6">매물 정보를 입력하면 '매물안내' 페이지에 즉시 노출됩니다.</p>
+
+      <form id="property-form" onsubmit="handleSaveProperty(event)" class="space-y-4">
+        <input type="hidden" id="prop-id" value="">
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <!-- 거래유형 -->
+          <div>
+            <label class="block text-xs font-medium text-text-secondary mb-1">거래 유형 *</label>
+            <select id="prop-type" required class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface focus:outline-none focus:border-primary text-sm min-h-[44px]">
+              <option value="매매">매매</option>
+              <option value="전세">전세</option>
+              <option value="월세">월세</option>
+            </select>
+          </div>
+
+          <!-- 매물분류 -->
+          <div>
+            <label class="block text-xs font-medium text-text-secondary mb-1">매물 분류 *</label>
+            <select id="prop-category" required class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface focus:outline-none focus:border-primary text-sm min-h-[44px]">
+              <option value="아파트">아파트</option>
+              <option value="상가">상가</option>
+              <option value="오피스텔">오피스텔</option>
+              <option value="빌라·주택">빌라·주택</option>
+              <option value="토지">토지</option>
+              <option value="기타">기타</option>
+            </select>
+          </div>
+
+          <!-- 상태/배지 -->
+          <div>
+            <label class="block text-xs font-medium text-text-secondary mb-1">상태 배지</label>
+            <input type="text" id="prop-badge" placeholder="예: 즉시입주가능, 올수리, 급매" class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface focus:outline-none focus:border-primary text-sm min-h-[44px]">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- 단지명/위치 -->
+          <div>
+            <label class="block text-xs font-medium text-text-secondary mb-1">단지명 / 위치 *</label>
+            <input type="text" id="prop-location" required placeholder="예: 금곡동 · 청솔주공9단지" class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface focus:outline-none focus:border-primary text-sm min-h-[44px]">
+          </div>
+
+          <!-- 매물명/제목 -->
+          <div>
+            <label class="block text-xs font-medium text-text-secondary mb-1">매물명 / 평형 *</label>
+            <input type="text" id="prop-title" required placeholder="예: 59㎡ (방 3 / 욕실 1)" class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface focus:outline-none focus:border-primary text-sm min-h-[44px]">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <!-- 가격 표시 -->
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-medium text-text-secondary mb-1">표시 가격 *</label>
+            <input type="text" id="prop-price" required placeholder="예: 9억 5,000만원 또는 보증금 3,000 / 월 95만원" class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface focus:outline-none focus:border-primary text-sm min-h-[44px]">
+          </div>
+
+          <!-- 층수/상세표시 -->
+          <div>
+            <label class="block text-xs font-medium text-text-secondary mb-1">부가 층 표시</label>
+            <input type="text" id="prop-priceUnit" placeholder="예: / 중층, / 고층" class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface focus:outline-none focus:border-primary text-sm min-h-[44px]">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <!-- 정렬용 금액 (만원) -->
+          <div>
+            <label class="block text-xs font-medium text-text-secondary mb-1">정렬금액(만원) *</label>
+            <input type="number" id="prop-priceNumber" required placeholder="예: 95000" class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface focus:outline-none focus:border-primary text-sm min-h-[44px]">
+          </div>
+
+          <!-- 전용면적 -->
+          <div>
+            <label class="block text-xs font-medium text-text-secondary mb-1">전용면적</label>
+            <input type="text" id="prop-area" placeholder="예: 59.8㎡" class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface focus:outline-none focus:border-primary text-sm min-h-[44px]">
+          </div>
+
+          <!-- 해당층/총층 -->
+          <div>
+            <label class="block text-xs font-medium text-text-secondary mb-1">해당층/총층</label>
+            <input type="text" id="prop-floor" placeholder="예: 12층/15층" class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface focus:outline-none focus:border-primary text-sm min-h-[44px]">
+          </div>
+
+          <!-- 방향 -->
+          <div>
+            <label class="block text-xs font-medium text-text-secondary mb-1">방향</label>
+            <input type="text" id="prop-direction" placeholder="예: 남향, 동향" class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface focus:outline-none focus:border-primary text-sm min-h-[44px]">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- 방/욕실수 -->
+          <div>
+            <label class="block text-xs font-medium text-text-secondary mb-1">방/욕실수</label>
+            <input type="text" id="prop-rooms" placeholder="예: 방 3 / 욕실 1" class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface focus:outline-none focus:border-primary text-sm min-h-[44px]">
+          </div>
+
+          <!-- 입주시기 -->
+          <div>
+            <label class="block text-xs font-medium text-text-secondary mb-1">입주시기</label>
+            <input type="text" id="prop-moveIn" placeholder="예: 즉시입주 가능, 협의입주" class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface focus:outline-none focus:border-primary text-sm min-h-[44px]">
+          </div>
+        </div>
+
+        <!-- 한줄 특징 -->
+        <div>
+          <label class="block text-xs font-medium text-text-secondary mb-1">핵심 특징 (요약)</label>
+          <input type="text" id="prop-features" placeholder="예: 올수리 완료, 미금역 초역세권, 판상형 구조" class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface focus:outline-none focus:border-primary text-sm min-h-[44px]">
+        </div>
+
+        <!-- 상세 설명 -->
+        <div>
+          <label class="block text-xs font-medium text-text-secondary mb-1">상세 설명</label>
+          <textarea id="prop-description" rows="3" placeholder="매물에 대한 상세 설명을 작성해 주세요." class="w-full bg-surface-container border border-outline-variant/40 rounded-xl p-3 text-on-surface focus:outline-none focus:border-primary text-sm"></textarea>
+        </div>
+
+        <!-- 대표 사진 URL -->
+        <div>
+          <label class="block text-xs font-medium text-text-secondary mb-1">대표 사진 이미지 URL (비워둘 시 기본 이미지 적용)</label>
+          <input type="url" id="prop-image" placeholder="https://..." class="w-full bg-surface-container border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface focus:outline-none focus:border-primary text-sm min-h-[44px]">
+        </div>
+
+        <!-- 저장/취소 버튼 -->
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-outline-variant/20">
+          <button type="button" onclick="closePropertyModal()" class="px-5 py-2.5 bg-surface-container-highest text-on-surface rounded-xl hover:bg-surface-bright transition-colors text-sm font-medium min-h-[44px]">
+            취소
+          </button>
+          <button type="submit" id="prop-submit-btn" class="px-6 py-2.5 bg-primary text-on-primary rounded-xl font-semibold hover:bg-primary-fixed transition-colors flex items-center gap-2 shadow-lg min-h-[44px]">
+            <span id="prop-submit-spinner" class="hidden material-symbols-outlined text-sm animate-spin">progress_activity</span>
+            <span id="prop-submit-text">저장하기</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script src="db.js"></script>
   <script>
+    let allProperties = [];
+    let currentPropFilter = 'all';
+
     async function initAdmin() {
       if (isAdmin()) {
         document.getElementById('login-section').classList.add('hidden');
         document.getElementById('dashboard-section').classList.remove('hidden');
         document.getElementById('dashboard-section').classList.add('flex');
+        await loadPropertiesTable();
         await loadPostsTable();
       } else {
         document.getElementById('login-section').classList.remove('hidden');
@@ -226,10 +443,229 @@
       window.location.reload();
     }
 
+    function switchTab(tab) {
+      const propTabBtn = document.getElementById('tab-btn-properties');
+      const newsTabBtn = document.getElementById('tab-btn-news');
+      const propContent = document.getElementById('tab-content-properties');
+      const newsContent = document.getElementById('tab-content-news');
+
+      if (tab === 'properties') {
+        propTabBtn.className = 'flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all bg-primary text-on-primary shadow-sm min-h-[40px]';
+        newsTabBtn.className = 'flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all text-on-surface-variant hover:text-on-surface min-h-[40px]';
+        propContent.classList.remove('hidden');
+        propContent.classList.add('flex');
+        newsContent.classList.add('hidden');
+        newsContent.classList.remove('flex');
+      } else {
+        newsTabBtn.className = 'flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all bg-primary text-on-primary shadow-sm min-h-[40px]';
+        propTabBtn.className = 'flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all text-on-surface-variant hover:text-on-surface min-h-[40px]';
+        newsContent.classList.remove('hidden');
+        newsContent.classList.add('flex');
+        propContent.classList.add('hidden');
+        propContent.classList.remove('flex');
+      }
+    }
+
+    // ==================== 매물 관리 테이블 로직 ====================
+    async function loadPropertiesTable() {
+      const tbody = document.getElementById('properties-table-body');
+      const emptyMsg = document.getElementById('empty-properties-msg');
+      const countBadge = document.getElementById('properties-count-badge');
+      
+      try {
+        allProperties = await getProperties();
+      } catch(e) {
+        allProperties = [];
+      }
+
+      if (countBadge) countBadge.textContent = `${allProperties.length}건`;
+      renderPropertiesTable();
+    }
+
+    function filterPropertiesTable(type) {
+      currentPropFilter = type;
+      ['all', '매매', '전세', '월세'].forEach(t => {
+        const btn = document.getElementById(`prop-filter-${t}`);
+        if (btn) {
+          if (t === type) {
+            btn.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold bg-primary text-on-primary transition-all';
+          } else {
+            btn.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold bg-surface-container text-on-surface-variant hover:text-on-surface transition-all';
+          }
+        }
+      });
+      renderPropertiesTable();
+    }
+
+    function renderPropertiesTable() {
+      const tbody = document.getElementById('properties-table-body');
+      const emptyMsg = document.getElementById('empty-properties-msg');
+
+      const filtered = allProperties.filter(p => currentPropFilter === 'all' || p.type === currentPropFilter);
+
+      if (!filtered || filtered.length === 0) {
+        tbody.innerHTML = '';
+        emptyMsg.classList.remove('hidden');
+        return;
+      }
+
+      emptyMsg.classList.add('hidden');
+      tbody.innerHTML = filtered.map(item => {
+        const typeBadgeCls = item.type === '매매' 
+          ? 'bg-primary/20 text-primary border border-primary/30' 
+          : item.type === '전세'
+          ? 'bg-secondary/20 text-secondary border border-secondary/30'
+          : 'bg-tertiary/20 text-tertiary border border-tertiary/30';
+
+        return `
+          <tr class="hover:bg-surface-container-high/40 transition-colors">
+            <td class="py-4 px-4 text-center text-text-secondary text-sm">${item.id}</td>
+            <td class="py-4 px-4 text-center">
+              <span class="px-2.5 py-1 rounded-md text-xs font-semibold ${typeBadgeCls}">${escapeHtml(item.type || '매매')}</span>
+            </td>
+            <td class="py-4 px-4 text-text-secondary text-sm">${escapeHtml(item.category || '아파트')}</td>
+            <td class="py-4 px-4 font-medium text-sm text-text-secondary">${escapeHtml(item.location || '')}</td>
+            <td class="py-4 px-4 font-semibold text-on-surface">
+              <div class="flex items-center gap-2">
+                <span>${escapeHtml(item.title || '')}</span>
+                ${item.badge ? `<span class="px-1.5 py-0.5 rounded text-[10px] bg-surface-container-highest text-on-surface-variant">${escapeHtml(item.badge)}</span>` : ''}
+              </div>
+            </td>
+            <td class="py-4 px-4 font-bold text-primary text-sm">${escapeHtml(item.price || '')}</td>
+            <td class="py-4 px-4 text-text-secondary text-xs text-center">${escapeHtml(item.date || '')}</td>
+            <td class="py-4 px-4 text-center">
+              <div class="flex items-center justify-center gap-2">
+                <button onclick="openPropertyModal(${item.id})" class="px-2.5 py-1 rounded bg-surface-container-highest text-on-surface hover:bg-surface-bright text-xs font-medium transition-colors min-h-[36px] flex items-center gap-1">
+                  <span class="material-symbols-outlined text-xs">edit</span> 수정
+                </button>
+                <button onclick="handleDeleteProperty(${item.id})" class="px-2.5 py-1 rounded bg-error-container text-error hover:opacity-80 text-xs font-medium transition-opacity min-h-[36px] flex items-center gap-1">
+                  <span class="material-symbols-outlined text-xs">delete</span> 삭제
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // ==================== 매물 모달 열기/닫기/저장 ====================
+    function openPropertyModal(editId = null) {
+      const modal = document.getElementById('property-modal');
+      const title = document.getElementById('property-modal-title');
+      const form = document.getElementById('property-form');
+
+      form.reset();
+      document.getElementById('prop-id').value = '';
+
+      if (editId) {
+        const item = allProperties.find(p => String(p.id) === String(editId));
+        if (item) {
+          title.textContent = '매물 정보 수정';
+          document.getElementById('prop-id').value = item.id;
+          document.getElementById('prop-type').value = item.type || '매매';
+          document.getElementById('prop-category').value = item.category || '아파트';
+          document.getElementById('prop-badge').value = item.badge || '';
+          document.getElementById('prop-location').value = item.location || '';
+          document.getElementById('prop-title').value = item.title || '';
+          document.getElementById('prop-price').value = item.price || '';
+          document.getElementById('prop-priceUnit').value = item.priceUnit || '';
+          document.getElementById('prop-priceNumber').value = item.priceNumber || 0;
+          document.getElementById('prop-area').value = item.area || '';
+          document.getElementById('prop-floor').value = item.floor || '';
+          document.getElementById('prop-direction').value = item.direction || '남향';
+          document.getElementById('prop-rooms').value = item.rooms || '';
+          document.getElementById('prop-moveIn').value = item.moveIn || '즉시입주 가능';
+          document.getElementById('prop-features').value = item.features || '';
+          document.getElementById('prop-description').value = item.description || '';
+          document.getElementById('prop-image').value = item.image || '';
+        }
+      } else {
+        title.textContent = '새 매물 등록';
+        document.getElementById('prop-location').value = '금곡동 · 청솔주공9단지';
+        document.getElementById('prop-direction').value = '남향';
+        document.getElementById('prop-moveIn').value = '즉시입주 가능';
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closePropertyModal() {
+      const modal = document.getElementById('property-modal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+
+    async function handleSaveProperty(e) {
+      e.preventDefault();
+      const id = document.getElementById('prop-id').value;
+      const btn = document.getElementById('prop-submit-btn');
+      const spinner = document.getElementById('prop-submit-spinner');
+      const btnText = document.getElementById('prop-submit-text');
+
+      const propData = {
+        type: document.getElementById('prop-type').value,
+        category: document.getElementById('prop-category').value,
+        badge: document.getElementById('prop-badge').value.trim() || '추천매물',
+        location: document.getElementById('prop-location').value.trim(),
+        title: document.getElementById('prop-title').value.trim(),
+        price: document.getElementById('prop-price').value.trim(),
+        priceUnit: document.getElementById('prop-priceUnit').value.trim(),
+        priceNumber: parseInt(document.getElementById('prop-priceNumber').value) || 0,
+        area: document.getElementById('prop-area').value.trim() || '-',
+        floor: document.getElementById('prop-floor').value.trim() || '-',
+        direction: document.getElementById('prop-direction').value.trim() || '남향',
+        rooms: document.getElementById('prop-rooms').value.trim() || '-',
+        moveIn: document.getElementById('prop-moveIn').value.trim() || '즉시입주 협의',
+        features: document.getElementById('prop-features').value.trim(),
+        description: document.getElementById('prop-description').value.trim(),
+        image: document.getElementById('prop-image').value.trim() || 'https://lh3.googleusercontent.com/aida-public/AB6AXuAbw7Paqh3AYAIDGdtQJqxQPbFO9IhhlwMA3Ttx7j63bOMHBXHQGzQqFmhrwosSHRTY2Wgwc4tQQC307d47M9R69BLN0C_MCd_Vx0OZOXLrFvXKBBP94w54GonsC3Ug9hsQNbLmz7ka71u9fvTkW4GYaFm5HqSECgWL57qtJrry_6C2iuS3wpTmIAii_i92l3SL2r0lCCnqiOkcRK8jcfdBZrCS14JO_K0eF7bpEm4OjC5HGhgp84fM'
+      };
+
+      btn.disabled = true;
+      spinner.classList.remove('hidden');
+      btnText.textContent = '저장 중...';
+
+      try {
+        if (id) {
+          await updateProperty(id, propData);
+          alert('매물 정보가 성공적으로 수정되었습니다.');
+        } else {
+          await createProperty(propData);
+          alert('새 매물이 성공적으로 등록되었습니다.');
+        }
+        closePropertyModal();
+        await loadPropertiesTable();
+      } catch(err) {
+        alert('저장 실패: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        spinner.classList.add('hidden');
+        btnText.textContent = '저장하기';
+      }
+    }
+
+    async function handleDeleteProperty(id) {
+      if (!confirm('정말로 이 매물을 삭제하시겠습니까?\n삭제된 매물은 매물안내 페이지에서 즉시 제외됩니다.')) return;
+      try {
+        await deleteProperty(id);
+        alert('매물이 정상적으로 삭제되었습니다.');
+        await loadPropertiesTable();
+      } catch(err) {
+        alert('삭제 실패: ' + err.message);
+      }
+    }
+
+    // ==================== 뉴스 & 실거래가 테이블 로직 ====================
     async function loadPostsTable() {
       const tbody = document.getElementById('posts-table-body');
       const emptyMsg = document.getElementById('empty-dashboard-msg');
-      const posts = await getPosts();
+      let posts = [];
+      try {
+        posts = await getPosts();
+      } catch(e) {
+        posts = [];
+      }
 
       if (!posts || posts.length === 0) {
         tbody.innerHTML = '';
@@ -238,7 +674,7 @@
       }
 
       emptyMsg.classList.add('hidden');
-      tbody.innerHTML = posts.map((post, idx) => `
+      tbody.innerHTML = posts.map(post => `
         <tr class="hover:bg-surface-container-high/40 transition-colors">
           <td class="py-4 px-6 text-center text-text-secondary text-sm">${post.id}</td>
           <td class="py-4 px-6"><span class="px-2 py-0.5 rounded text-xs bg-primary-container text-on-primary-container font-medium">${escapeHtml(post.category || '뉴스')}</span></td>
@@ -251,7 +687,7 @@
               <a href="news-write.html?id=${post.id}" class="px-2.5 py-1 rounded bg-surface-container-highest text-on-surface hover:bg-surface-bright text-xs font-medium transition-colors min-h-[36px] flex items-center">
                 수정
               </a>
-              <button onclick="handleDelete(${post.id})" class="px-2.5 py-1 rounded bg-error-container text-error hover:opacity-80 text-xs font-medium transition-opacity min-h-[36px] flex items-center">
+              <button onclick="handleDeletePost(${post.id})" class="px-2.5 py-1 rounded bg-error-container text-error hover:opacity-80 text-xs font-medium transition-opacity min-h-[36px] flex items-center">
                 삭제
               </button>
             </div>
@@ -260,7 +696,7 @@
       `).join('');
     }
 
-    async function handleDelete(id) {
+    async function handleDeletePost(id) {
       if (!confirm('정말로 이 게시글을 삭제하시겠습니까?')) return;
       try {
         await deletePost(id);

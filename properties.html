@@ -386,6 +386,7 @@
     </a>
   </nav>
 
+  <script src="db.js"></script>
   <script>
     let currentFilter = 'all';
 
@@ -466,6 +467,91 @@
     document.getElementById('propertyModal')?.addEventListener('click', (e) => {
       if (e.target.id === 'propertyModal') closeDetailModal();
     });
+
+    // ==================== 동적 매물 렌더링 ====================
+    let loadedProperties = [];
+
+    async function loadPropertiesListings() {
+      try {
+        loadedProperties = await getProperties();
+      } catch(e) {
+        console.error('Failed to load properties:', e);
+        loadedProperties = [];
+      }
+
+      if (loadedProperties && loadedProperties.length > 0) {
+        renderPropertiesGrid(loadedProperties);
+      }
+      applyFilters();
+    }
+
+    function renderPropertiesGrid(props) {
+      const grid = document.getElementById('listingsGrid');
+      if (!grid) return;
+
+      grid.innerHTML = props.map(item => {
+        const typeBadgeCls = item.type === '매매' 
+          ? 'bg-primary text-on-primary' 
+          : item.type === '전세'
+          ? 'bg-secondary text-on-secondary'
+          : 'bg-tertiary text-on-tertiary';
+
+        const safeImg = item.image || 'https://lh3.googleusercontent.com/aida-public/AB6AXuAbw7Paqh3AYAIDGdtQJqxQPbFO9IhhlwMA3Ttx7j63bOMHBXHQGzQqFmhrwosSHRTY2Wgwc4tQQC307d47M9R69BLN0C_MCd_Vx0OZOXLrFvXKBBP94w54GonsC3Ug9hsQNbLmz7ka71u9fvTkW4GYaFm5HqSECgWL57qtJrry_6C2iuS3wpTmIAii_i92l3SL2r0lCCnqiOkcRK8jcfdBZrCS14JO_K0eF7bpEm4OjC5HGhgp84fM';
+        const searchKeywords = [item.title, item.location, item.type, item.category, item.features, item.badge].filter(Boolean).join(' ').toLowerCase();
+
+        return `
+          <div class="property-card bg-surface-container-low rounded-xl overflow-hidden shadow-md flex flex-col justify-between group hover:translate-y-[-4px] transition-all duration-300" 
+               data-price="${item.priceNumber || 0}" 
+               data-title="${escapeHtml(searchKeywords)}" 
+               data-type="${escapeHtml(item.type || '매매')}">
+            <div class="relative h-56 overflow-hidden">
+              <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" style="background-image: url('${escapeHtml(safeImg)}');"></div>
+              <div class="absolute top-3 left-3 flex gap-2">
+                <span class="px-3 py-1 ${typeBadgeCls} rounded-lg text-label-md font-label-md shadow">${escapeHtml(item.type || '매매')}</span>
+                ${item.badge ? `<span class="px-3 py-1 bg-surface-dark/80 backdrop-blur text-on-surface rounded-lg text-label-md font-label-md">${escapeHtml(item.badge)}</span>` : ''}
+              </div>
+            </div>
+            <div class="p-6 flex flex-col flex-grow justify-between">
+              <div>
+                <div class="text-text-secondary text-body-sm mb-1">${escapeHtml(item.location || '금곡동')}</div>
+                <h3 class="text-headline-sm font-headline-sm text-on-surface mb-2">${escapeHtml(item.title || '')}</h3>
+                <div class="text-headline-md font-headline-md text-primary mb-4">${escapeHtml(item.price || '')} <span class="text-body-sm text-text-secondary font-normal">${escapeHtml(item.priceUnit || '')}</span></div>
+                <div class="grid grid-cols-3 gap-2 py-3 border-y border-outline-variant/30 mb-4 text-center">
+                  <div><div class="text-text-secondary text-label-sm">전용면적</div><div class="text-on-surface text-body-sm font-semibold">${escapeHtml(item.area || '-')}</div></div>
+                  <div><div class="text-text-secondary text-label-sm">해당층/총층</div><div class="text-on-surface text-body-sm font-semibold">${escapeHtml(item.floor || '-')}</div></div>
+                  <div><div class="text-text-secondary text-label-sm">방향</div><div class="text-on-surface text-body-sm font-semibold">${escapeHtml(item.direction || '남향')}</div></div>
+                </div>
+                <p class="text-body-sm text-on-surface-variant line-clamp-2 mb-4">${escapeHtml(item.description || item.features || '')}</p>
+              </div>
+              <div class="flex items-center gap-3 pt-2">
+                <button class="flex-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface py-2.5 rounded-lg text-label-lg font-label-md transition-colors text-center min-h-[44px]" 
+                  onclick="openPropertyModalFromData(${item.id})">상세보기</button>
+                <a class="flex items-center justify-center bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary p-2.5 rounded-lg transition-colors min-h-[44px] min-w-[44px]" href="tel:031-713-8822">
+                  <span class="material-symbols-outlined text-xl">call</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openPropertyModalFromData(id) {
+      const item = loadedProperties.find(p => String(p.id) === String(id));
+      if (!item) return;
+
+      openDetailModal(
+        item.location || '금곡동',
+        item.title || '',
+        item.price || '',
+        item.rooms || '-',
+        (item.floor || '-') + ' (' + (item.direction || '남향') + ')',
+        item.moveIn || '즉시입주 가능',
+        item.features || item.description || ''
+      );
+    }
+
+    document.addEventListener('DOMContentLoaded', loadPropertiesListings);
   </script>
 </body>
 </html>

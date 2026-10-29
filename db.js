@@ -298,3 +298,139 @@ async function deletePost(id) {
   await savePostsToGithub(posts);
   return true;
 }
+
+
+// ==================== 매물 관리 (Properties) ====================
+
+async function getProperties() {
+  const local = localStorage.getItem('properties_cache');
+  let fallback = [];
+  if (local) {
+    try { fallback = JSON.parse(local); } catch(e) {}
+  }
+
+  try {
+    const res = await fetch('data/properties.json?t=' + Date.now());
+    if (res.ok) {
+      const data = await res.json();
+      localStorage.setItem('properties_cache', JSON.stringify(data));
+      return data;
+    }
+  } catch(e) {}
+
+  return fallback;
+}
+
+async function getPropertyById(id) {
+  const props = await getProperties();
+  return props.find(p => String(p.id) === String(id));
+}
+
+async function savePropertiesToGithub(properties) {
+  const cfg = await loadConfig();
+  const token = String(cfg.github_token || '').replace(/\s+/g, '');
+  
+  localStorage.setItem('properties_cache', JSON.stringify(properties));
+
+  if (!token || token === 'YOUR_GITHUB_TOKEN') {
+    throw new Error('GitHub 토큰이 설정되지 않았습니다. Vercel 환경 변수나 config를 확인하세요.');
+  }
+  if (!cfg.github_owner || !cfg.github_repo) {
+    throw new Error('GitHub 저장소 정보(owner/repo)가 올바르지 않습니다.');
+  }
+
+  const path = 'data/properties.json';
+  const url = `https://api.github.com/repos/${cfg.github_owner}/${cfg.github_repo}/contents/${path}`;
+
+  let sha = null;
+  try {
+    const getRes = await fetch(url + '?ref=main&t=' + Date.now(), {
+      headers: {
+        'Authorization': 'token ' + token,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+    if (getRes.ok) {
+      const getData = await getRes.json();
+      sha = getData.sha;
+    }
+  } catch(e) {}
+
+  const jsonStr = JSON.stringify(properties, null, 2);
+  const content = b64EncodeUnicode(jsonStr);
+
+  const bodyData = {
+    message: `feat(properties): update properties ${new Date().toISOString()}`,
+    content: content,
+    branch: 'main'
+  };
+  if (sha) bodyData.sha = sha;
+
+  const putRes = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Authorization': 'token ' + token,
+      'Content-Type': 'application/json',
+      'Accept': 'application/vnd.github.v3+json'
+    },
+    body: JSON.stringify(bodyData)
+  });
+
+  if (!putRes.ok) {
+    const errText = await putRes.text();
+    throw new Error(`저장 실패 (${putRes.status}): ${errText}`);
+  }
+
+  return true;
+}
+
+async function createProperty(propData) {
+  const props = await getProperties();
+  const newId = props.length > 0 ? Math.max(...props.map(p => Number(p.id) || 0)) + 1 : 1;
+  const newProp = {
+    id: newId,
+    type: propData.type || '매매',
+    category: propData.category || '아파트',
+    badge: propData.badge || '즉시입주가능',
+    location: propData.location || '금곡동 · 청솔주공9단지',
+    title: propData.title || '',
+    price: propData.price || '',
+    priceUnit: propData.priceUnit || '',
+    priceNumber: Number(propData.priceNumber) || 0,
+    area: propData.area || '',
+    floor: propData.floor || '',
+    direction: propData.direction || '남향',
+    rooms: propData.rooms || '',
+    moveIn: propData.moveIn || '즉시입주 가능',
+    features: propData.features || '',
+    description: propData.description || '',
+    image: propData.image || 'https://lh3.googleusercontent.com/aida-public/AB6AXuAbw7Paqh3AYAIDGdtQJqxQPbFO9IhhlwMA3Ttx7j63bOMHBXHQGzQqFmhrwosSHRTY2Wgwc4tQQC307d47M9R69BLN0C_MCd_Vx0OZOXLrFvXKBBP94w54GonsC3Ug9hsQNbLmz7ka71u9fvTkW4GYaFm5HqSECgWL57qtJrry_6C2iuS3wpTmIAii_i92l3SL2r0lCCnqiOkcRK8jcfdBZrCS14JO_K0eF7bpEm4OjC5HGhgp84fM',
+    date: propData.date || new Date().toISOString().slice(0, 10)
+  };
+  props.unshift(newProp);
+  await savePropertiesToGithub(props);
+  return newProp;
+}
+
+async function updateProperty(id, updatedData) {
+  const props = await getProperties();
+  const index = props.findIndex(p => String(p.id) === String(id));
+  if (index === -1) throw new Error('해당 매물을 찾을 수 없습니다.');
+  
+  props[index] = {
+    ...props[index],
+    ...updatedData,
+    id: props[index].id,
+    priceNumber: Number(updatedData.priceNumber) || props[index].priceNumber,
+    updatedAt: new Date().toISOString().slice(0, 10)
+  };
+  await savePropertiesToGithub(props);
+  return props[index];
+}
+
+async function deleteProperty(id) {
+  let props = await getProperties();
+  props = props.filter(p => String(p.id) !== String(id));
+  await savePropertiesToGithub(props);
+  return true;
+}
