@@ -307,35 +307,51 @@
         </div>
       </div>
 
-      <div class="fixed inset-0 z-50 bg-surface-dark/80 backdrop-blur-sm hidden items-center justify-center p-4" id="propertyModal">
-        <div class="bg-surface-container-high rounded-2xl max-w-lg w-full p-8 shadow-2xl relative border border-outline-variant/30">
-          <button class="absolute top-6 right-6 text-on-surface-variant hover:text-on-surface" onclick="closeDetailModal()">
+      <div class="fixed inset-0 z-50 bg-surface-dark/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto" id="propertyModal">
+        <div class="bg-surface-container-high rounded-2xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl relative border border-outline-variant/30 my-8">
+          <button class="absolute top-6 right-6 text-on-surface-variant hover:text-on-surface p-1 rounded-lg hover:bg-surface-container transition-colors" onclick="closeDetailModal()">
             <span class="material-symbols-outlined text-2xl">close</span>
           </button>
           <div class="flex items-center gap-2 mb-2">
             <span class="px-2.5 py-1 bg-primary text-on-primary rounded text-label-sm font-label-md" id="modalCategory">매물상세</span>
             <span class="text-text-secondary text-body-sm" id="modalLocation">금곡동</span>
           </div>
-          <h2 class="text-headline-md font-headline-md text-on-surface mb-4" id="modalTitle">매물 상세 정보</h2>
+          <h2 class="text-headline-md font-headline-md text-on-surface mb-2" id="modalTitle">매물 상세 정보</h2>
           <div class="text-headline-lg font-headline-lg text-primary mb-6" id="modalPrice">가격 정보</div>
-          <div class="space-y-4 bg-surface-container p-5 rounded-xl mb-6">
-            <div class="flex justify-between items-center border-b border-outline-variant/20 pb-3">
+          
+          <!-- 상세 스펙 테이블 -->
+          <div class="space-y-3.5 bg-surface-container p-5 rounded-xl mb-5">
+            <div class="flex justify-between items-center border-b border-outline-variant/20 pb-2.5">
+              <span class="text-on-surface-variant text-body-md">전용면적</span>
+              <span class="text-on-surface text-body-md font-semibold" id="modalArea">-</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-outline-variant/20 pb-2.5">
               <span class="text-on-surface-variant text-body-md">평면도/구조</span>
               <span class="text-on-surface text-body-md font-semibold" id="modalRooms">-</span>
             </div>
-            <div class="flex justify-between items-center border-b border-outline-variant/20 pb-3">
+            <div class="flex justify-between items-center border-b border-outline-variant/20 pb-2.5">
               <span class="text-on-surface-variant text-body-md">층수/방향</span>
               <span class="text-on-surface text-body-md font-semibold" id="modalFloor">-</span>
             </div>
-            <div class="flex justify-between items-center border-b border-outline-variant/20 pb-3">
+            <div class="flex justify-between items-center border-b border-outline-variant/20 pb-2.5">
               <span class="text-on-surface-variant text-body-md">입주 가능일</span>
               <span class="text-on-surface text-body-md font-semibold" id="modalMoveIn">-</span>
             </div>
-            <div class="flex justify-between items-center">
-              <span class="text-on-surface-variant text-body-md">특징 및 옵션</span>
+            <div class="flex justify-between items-start pt-1">
+              <span class="text-on-surface-variant text-body-md shrink-0">특징 및 옵션</span>
               <span class="text-on-surface text-body-sm text-right font-semibold" id="modalFeatures">-</span>
             </div>
           </div>
+
+          <!-- 상세 설명 섹션 -->
+          <div id="modalDescriptionWrapper" class="bg-surface-container/70 p-5 rounded-xl border border-outline-variant/20 mb-6">
+            <div class="flex items-center gap-2 text-xs font-semibold text-primary uppercase tracking-wider mb-2.5">
+              <span class="material-symbols-outlined text-sm">description</span>
+              <span>매물 상세 설명</span>
+            </div>
+            <div id="modalDescription" class="text-body-sm text-on-surface leading-relaxed whitespace-pre-line break-words"></div>
+          </div>
+
           <p class="text-body-sm text-on-surface-variant mb-6 text-center">
             * 정확한 동·호수 및 현장 방문 예약은 전화 상담을 통해 친절히 안내해 드립니다.
           </p>
@@ -447,15 +463,37 @@
       else noResults.classList.add('hidden');
     }
 
-    function openDetailModal(location, title, price, rooms, floor, moveIn, features) {
-      document.getElementById('modalCategory').textContent = title;
-      document.getElementById('modalLocation').textContent = location;
-      document.getElementById('modalTitle').textContent = title;
-      document.getElementById('modalPrice').textContent = price;
-      document.getElementById('modalRooms').textContent = rooms;
-      document.getElementById('modalFloor').textContent = floor;
-      document.getElementById('modalMoveIn').textContent = moveIn;
-      document.getElementById('modalFeatures').textContent = features;
+    function formatDescription(desc) {
+      if (!desc) return '';
+      const escaped = escapeHtml(desc);
+      return escaped.replace(/(01[016789]-\d{3,4}-\d{4}|0\d{1,2}-\d{3,4}-\d{4})/g, '<a href="tel:$1" class="text-primary underline font-medium hover:text-secondary">$1</a>');
+    }
+
+    function openDetailModal(location, title, price, rooms, floor, moveIn, features, description = '', area = '-', badge = '') {
+      document.getElementById('modalCategory').textContent = badge || '매물상세';
+      document.getElementById('modalLocation').textContent = location || '금곡동';
+      document.getElementById('modalTitle').textContent = title || '매물 상세';
+      document.getElementById('modalPrice').textContent = price || '';
+      
+      const areaEl = document.getElementById('modalArea');
+      if (areaEl) areaEl.textContent = area || '-';
+
+      document.getElementById('modalRooms').textContent = rooms || '-';
+      document.getElementById('modalFloor').textContent = floor || '-';
+      document.getElementById('modalMoveIn').textContent = moveIn || '-';
+      document.getElementById('modalFeatures').textContent = features || '-';
+
+      const descBox = document.getElementById('modalDescriptionWrapper');
+      const descEl = document.getElementById('modalDescription');
+      if (descBox && descEl) {
+        const fullDesc = (description || features || '').trim();
+        if (fullDesc) {
+          descEl.innerHTML = formatDescription(fullDesc);
+          descBox.classList.remove('hidden');
+        } else {
+          descBox.classList.add('hidden');
+        }
+      }
 
       const modal = document.getElementById('propertyModal');
       modal.classList.remove('hidden');
@@ -501,7 +539,7 @@
           : 'bg-tertiary text-on-tertiary';
 
         const safeImg = item.image || 'https://lh3.googleusercontent.com/aida-public/AB6AXuAbw7Paqh3AYAIDGdtQJqxQPbFO9IhhlwMA3Ttx7j63bOMHBXHQGzQqFmhrwosSHRTY2Wgwc4tQQC307d47M9R69BLN0C_MCd_Vx0OZOXLrFvXKBBP94w54GonsC3Ug9hsQNbLmz7ka71u9fvTkW4GYaFm5HqSECgWL57qtJrry_6C2iuS3wpTmIAii_i92l3SL2r0lCCnqiOkcRK8jcfdBZrCS14JO_K0eF7bpEm4OjC5HGhgp84fM';
-        const searchKeywords = [item.title, item.location, item.type, item.category, item.features, item.badge].filter(Boolean).join(' ').toLowerCase();
+        const searchKeywords = [item.title, item.location, item.type, item.category, item.features, item.description, item.badge].filter(Boolean).join(' ').toLowerCase();
 
         return `
           <div class="property-card bg-surface-container-low rounded-xl overflow-hidden shadow-md flex flex-col justify-between group hover:translate-y-[-4px] transition-all duration-300" 
@@ -525,7 +563,7 @@
                   <div><div class="text-text-secondary text-label-sm">해당층/총층</div><div class="text-on-surface text-body-sm font-semibold">${escapeHtml(item.floor || '-')}</div></div>
                   <div><div class="text-text-secondary text-label-sm">방향</div><div class="text-on-surface text-body-sm font-semibold">${escapeHtml(item.direction || '남향')}</div></div>
                 </div>
-                <p class="text-body-sm text-on-surface-variant line-clamp-2 mb-4">${escapeHtml(item.description || item.features || '')}</p>
+                <p class="text-body-sm text-on-surface-variant line-clamp-2 mb-4 whitespace-pre-line">${escapeHtml(item.description || item.features || '')}</p>
               </div>
               <div class="flex items-center gap-3 pt-2">
                 <button class="flex-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface py-2.5 rounded-lg text-label-lg font-label-md transition-colors text-center min-h-[44px]" 
@@ -549,9 +587,12 @@
         item.title || '',
         item.price || '',
         item.rooms || '-',
-        (item.floor || '-') + ' (' + (item.direction || '남향') + ')',
+        (item.floor || '-') + (item.direction ? ' (' + item.direction + ')' : ''),
         item.moveIn || '즉시입주 가능',
-        item.features || item.description || ''
+        item.features || '',
+        item.description || '',
+        item.area || '-',
+        item.badge || item.type || '매물상세'
       );
     }
 
