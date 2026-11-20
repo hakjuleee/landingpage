@@ -160,11 +160,80 @@
         </div>
 
         <div>
-          <div class="flex items-center justify-between mb-2">
-            <label class="block text-body-sm font-semibold text-text-secondary" for="post-content-input">본문 내용 (마크다운 지원)</label>
-            <span class="text-xs text-outline">#, **, -, 링크, 코드블록 지원</span>
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <label class="block text-body-sm font-semibold text-text-secondary" for="post-content-input">
+              본문 내용 <span class="text-xs text-primary font-normal">(HTML 표/이미지 및 마크다운 지원)</span>
+            </label>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="togglePreview()" id="preview-toggle-btn" class="px-3 py-1 bg-surface-container-highest hover:bg-surface-bright text-xs rounded-lg text-on-surface font-medium flex items-center gap-1 transition-colors min-h-[32px]">
+                <span class="material-symbols-outlined text-sm">visibility</span>
+                <span id="preview-btn-text">실시간 미리보기 켜기</span>
+              </button>
+            </div>
           </div>
-          <textarea id="post-content-input" rows="14" required placeholder="마크다운 문법을 사용하여 본문을 작성해 주세요. (예: ## 소제목, - 항목, **강조**)" class="w-full bg-surface-container-high border border-outline-variant/40 rounded-xl p-4 text-on-surface text-body-md font-mono focus:outline-none focus:border-primary leading-relaxed"></textarea>
+
+          <!-- 에디터 툴바 -->
+          <div class="bg-surface-container-highest/80 border border-outline-variant/40 rounded-t-xl p-2 flex flex-wrap items-center gap-1.5 text-xs text-on-surface">
+            <!-- 표 삽입 도구 -->
+            <div class="relative inline-block">
+              <button type="button" onclick="toggleTableDropdown()" class="px-2.5 py-1.5 bg-primary/20 text-primary hover:bg-primary/30 rounded-lg font-medium flex items-center gap-1 transition-colors min-h-[32px]">
+                <span class="material-symbols-outlined text-sm">table_chart</span>
+                <span>표 삽입</span>
+                <span class="material-symbols-outlined text-xs">arrow_drop_down</span>
+              </button>
+              <div id="table-dropdown" class="hidden absolute left-0 mt-1 w-52 bg-surface-container-high border border-outline-variant/40 rounded-xl shadow-2xl py-1 z-30">
+                <button type="button" onclick="insertTableTemplate('general')" class="w-full text-left px-3 py-2 hover:bg-surface-container-highest text-xs text-on-surface flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-primary">grid_on</span>
+                  <span>기본 3x3 표 (HTML)</span>
+                </button>
+                <button type="button" onclick="insertTableTemplate('property')" class="w-full text-left px-3 py-2 hover:bg-surface-container-highest text-xs text-on-surface flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-secondary">apartment</span>
+                  <span>부동산 매물 사양표</span>
+                </button>
+                <button type="button" onclick="insertTableTemplate('price')" class="w-full text-left px-3 py-2 hover:bg-surface-container-highest text-xs text-on-surface flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm text-tertiary">payments</span>
+                  <span>실거래가 비교표</span>
+                </button>
+                <button type="button" onclick="insertTableTemplate('markdown')" class="w-full text-left px-3 py-2 hover:bg-surface-container-highest text-xs text-on-surface flex items-center gap-2 border-t border-outline-variant/20">
+                  <span class="material-symbols-outlined text-sm text-outline">view_column</span>
+                  <span>마크다운 형식 표</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 이미지 삽입 도구 -->
+            <button type="button" onclick="openImageModal()" class="px-2.5 py-1.5 bg-primary/20 text-primary hover:bg-primary/30 rounded-lg font-medium flex items-center gap-1 transition-colors min-h-[32px]">
+              <span class="material-symbols-outlined text-sm">image</span>
+              <span>이미지 삽입</span>
+            </button>
+
+            <span class="w-[1px] h-5 bg-outline-variant/40 mx-1"></span>
+
+            <!-- 서식 단축 버튼 -->
+            <button type="button" onclick="insertFormatting('h2')" title="소제목" class="p-1.5 hover:bg-surface-container rounded text-on-surface min-w-[32px] min-h-[32px] flex items-center justify-center font-bold">H2</button>
+            <button type="button" onclick="insertFormatting('bold')" title="굵게" class="p-1.5 hover:bg-surface-container rounded text-on-surface min-w-[32px] min-h-[32px] flex items-center justify-center font-bold">B</button>
+            <button type="button" onclick="insertFormatting('italic')" title="기울임" class="p-1.5 hover:bg-surface-container rounded text-on-surface min-w-[32px] min-h-[32px] flex items-center justify-center italic">I</button>
+            <button type="button" onclick="insertFormatting('link')" title="링크" class="p-1.5 hover:bg-surface-container rounded text-on-surface min-w-[32px] min-h-[32px] flex items-center justify-center">
+              <span class="material-symbols-outlined text-sm">link</span>
+            </button>
+            <button type="button" onclick="insertFormatting('hr')" title="구분선" class="p-1.5 hover:bg-surface-container rounded text-on-surface min-w-[32px] min-h-[32px] flex items-center justify-center">
+              <span class="material-symbols-outlined text-sm">horizontal_rule</span>
+            </button>
+            <button type="button" onclick="insertFormatting('ul')" title="글머리 기호" class="p-1.5 hover:bg-surface-container rounded text-on-surface min-w-[32px] min-h-[32px] flex items-center justify-center">
+              <span class="material-symbols-outlined text-sm">format_list_bulleted</span>
+            </button>
+          </div>
+
+          <textarea id="post-content-input" rows="14" required placeholder="본문 내용을 입력하세요. 상단의 '표 삽입'과 '이미지 삽입' 버튼으로 간편하게 추가할 수 있습니다." class="w-full bg-surface-container-high border-x border-b border-outline-variant/40 rounded-b-xl p-4 text-on-surface text-body-md font-mono focus:outline-none focus:border-primary leading-relaxed" oninput="updateLivePreview()"></textarea>
+
+          <!-- 실시간 미리보기 영역 -->
+          <div id="preview-container" class="hidden mt-4 bg-surface-container-high border border-outline-variant/40 rounded-xl p-6 shadow-inner">
+            <div class="flex items-center gap-2 pb-3 mb-4 border-b border-outline-variant/20 text-xs font-semibold text-text-secondary uppercase tracking-wider">
+              <span class="material-symbols-outlined text-sm text-primary">visibility</span>
+              <span>본문 실시간 렌더링 미리보기</span>
+            </div>
+            <div id="preview-content" class="leading-relaxed text-on-surface-variant min-h-[120px]"></div>
+          </div>
         </div>
 
         <div class="pt-4 flex flex-col sm:flex-row gap-4">
@@ -180,9 +249,206 @@
     </div>
   </main>
 
+  <!-- 이미지 삽입 모달 -->
+  <div id="image-modal" class="fixed inset-0 z-50 bg-surface-dark/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-surface-container rounded-2xl max-w-lg w-full p-6 border border-outline-variant/30 shadow-2xl relative">
+      <button type="button" onclick="closeImageModal()" class="absolute top-5 right-5 text-on-surface-variant hover:text-on-surface">
+        <span class="material-symbols-outlined text-2xl">close</span>
+      </button>
+
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary text-2xl">add_photo_alternate</span>
+        <h3 class="text-headline-sm font-bold text-on-surface">이미지 삽입</h3>
+      </div>
+
+      <div class="flex gap-2 mb-4 border-b border-outline-variant/20 pb-2">
+        <button type="button" id="img-tab-url" onclick="switchImageTab('url')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-primary text-on-primary">
+          웹 링크 (URL) 입력
+        </button>
+        <button type="button" id="img-tab-file" onclick="switchImageTab('file')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-surface-container-high text-on-surface-variant hover:text-on-surface">
+          내 PC 파일 선택
+        </button>
+      </div>
+
+      <!-- URL 입력 모드 -->
+      <div id="img-mode-url" class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-text-secondary mb-1">이미지 URL (https://...)</label>
+          <input type="url" id="modal-img-url" placeholder="https://example.com/image.jpg" class="w-full bg-surface-container-high border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface text-sm focus:outline-none focus:border-primary">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-text-secondary mb-1">이미지 설명 (대체 텍스트)</label>
+          <input type="text" id="modal-img-alt" placeholder="예: 청솔주공9단지 평면도" class="w-full bg-surface-container-high border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface text-sm focus:outline-none focus:border-primary">
+        </div>
+      </div>
+
+      <!-- 파일 업로드 모드 -->
+      <div id="img-mode-file" class="hidden space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-text-secondary mb-1">이미지 파일 선택</label>
+          <input type="file" id="modal-img-file" accept="image/*" class="w-full bg-surface-container-high border border-outline-variant/40 rounded-xl p-2 text-on-surface text-xs focus:outline-none focus:border-primary">
+          <p class="text-[11px] text-text-secondary mt-1">게시글 본문에 이미지 데이터가 직접 포함됩니다. (권장: 3MB 이하)</p>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-text-secondary mb-1">이미지 설명 (대체 텍스트)</label>
+          <input type="text" id="modal-img-alt-file" placeholder="예: 현장 사진" class="w-full bg-surface-container-high border border-outline-variant/40 rounded-xl px-3 py-2.5 text-on-surface text-sm focus:outline-none focus:border-primary">
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-end gap-3 pt-3 border-t border-outline-variant/20">
+        <button type="button" onclick="closeImageModal()" class="px-4 py-2 bg-surface-container-highest text-on-surface rounded-xl hover:bg-surface-bright text-xs font-medium">취소</button>
+        <button type="button" onclick="confirmInsertImage()" class="px-5 py-2 bg-primary text-on-primary rounded-xl font-semibold hover:bg-primary-fixed text-xs shadow-md">본문에 삽입</button>
+      </div>
+    </div>
+  </div>
+
   <script src="db.js"></script>
   <script>
     let editPostId = null;
+    let isPreviewOpen = false;
+    let currentImageTab = 'url';
+
+    function togglePreview() {
+      const container = document.getElementById('preview-container');
+      const btnText = document.getElementById('preview-btn-text');
+      isPreviewOpen = !isPreviewOpen;
+
+      if (isPreviewOpen) {
+        container.classList.remove('hidden');
+        btnText.textContent = '미리보기 닫기';
+        updateLivePreview();
+      } else {
+        container.classList.add('hidden');
+        btnText.textContent = '실시간 미리보기 켜기';
+      }
+    }
+
+    function updateLivePreview() {
+      if (!isPreviewOpen) return;
+      const content = document.getElementById('post-content-input').value;
+      const previewEl = document.getElementById('preview-content');
+      previewEl.innerHTML = renderMarkdown(content || '<span class="text-text-secondary italic">본문 내용을 입력하면 여기에 실시간으로 렌더링됩니다.</span>');
+    }
+
+    function toggleTableDropdown() {
+      const dd = document.getElementById('table-dropdown');
+      dd.classList.toggle('hidden');
+    }
+
+    // 외부 클릭 시 드롭다운 닫기
+    document.addEventListener('click', (e) => {
+      const dd = document.getElementById('table-dropdown');
+      if (dd && !dd.contains(e.target) && !e.target.closest('button[onclick="toggleTableDropdown()"]')) {
+        dd.classList.add('hidden');
+      }
+    });
+
+    function insertTextAtCursor(before, after = '') {
+      const textarea = document.getElementById('post-content-input');
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const text = textarea.value;
+      const selected = text.substring(start, end);
+
+      const replacement = before + (selected || '') + after;
+      textarea.value = text.substring(0, start) + replacement + text.substring(end);
+      textarea.focus();
+      textarea.selectionStart = start + before.length;
+      textarea.selectionEnd = start + before.length + (selected ? selected.length : 0);
+
+      updateLivePreview();
+    }
+
+    function insertTableTemplate(type) {
+      document.getElementById('table-dropdown').classList.add('hidden');
+      let template = '';
+
+      if (type === 'general') {
+        template = `\n<table class="w-full text-left border-collapse">\n  <thead>\n    <tr>\n      <th>구분</th>\n      <th>내용</th>\n      <th>비고</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>항목 1</td>\n      <td>상세 내용 입력</td>\n      <td>참고사항</td>\n    </tr>\n    <tr>\n      <td>항목 2</td>\n      <td>상세 내용 입력</td>\n      <td>-</td>\n    </tr>\n  </tbody>\n</table>\n\n`;
+      } else if (type === 'property') {
+        template = `\n<table class="w-full text-left border-collapse">\n  <thead>\n    <tr>\n      <th>항목</th>\n      <th>상세 사양</th>\n      <th>특징</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>소재지</td>\n      <td>성남시 분당구 금곡동 청솔주공9단지</td>\n      <td>미금역 역세권</td>\n    </tr>\n    <tr>\n      <td>공급/전용면적</td>\n      <td>74㎡ / 59.8㎡</td>\n      <td>인기 판상형</td>\n    </tr>\n    <tr>\n      <td>해당층/총층</td>\n      <td>12층 / 15층</td>\n      <td>로얄층 남향</td>\n    </tr>\n    <tr>\n      <td>입주 가능일</td>\n      <td>즉시입주 가능</td>\n      <td>올수리 완료</td>\n    </tr>\n  </tbody>\n</table>\n\n`;
+      } else if (type === 'price') {
+        template = `\n<table class="w-full text-left border-collapse">\n  <thead>\n    <tr>\n      <th>계약일</th>\n      <th>전용면적</th>\n      <th>층수</th>\n      <th>실거래가</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>2026.11</td>\n      <td>59.8㎡</td>\n      <td>10층</td>\n      <td>9억 6,000만원</td>\n    </tr>\n    <tr>\n      <td>2026.10</td>\n      <td>59.8㎡</td>\n      <td>7층</td>\n      <td>9억 4,500만원</td>\n    </tr>\n  </tbody>\n</table>\n\n`;
+      } else if (type === 'markdown') {
+        template = `\n| 구분 | 상세 내용 | 비고 |\n| :--- | :--- | :--- |\n| 항목 1 | 내용 1 | 비고 1 |\n| 항목 2 | 내용 2 | 비고 2 |\n\n`;
+      }
+
+      insertTextAtCursor(template);
+    }
+
+    function insertFormatting(type) {
+      if (type === 'h2') insertTextAtCursor('\n## ', '\n');
+      else if (type === 'bold') insertTextAtCursor('**', '**');
+      else if (type === 'italic') insertTextAtCursor('*', '*');
+      else if (type === 'link') insertTextAtCursor('[링크 텍스트](', 'https://)');
+      else if (type === 'hr') insertTextAtCursor('\n---\n\n');
+      else if (type === 'ul') insertTextAtCursor('\n- ', '\n');
+    }
+
+    function openImageModal() {
+      document.getElementById('image-modal').classList.remove('hidden');
+      document.getElementById('image-modal').classList.add('flex');
+    }
+
+    function closeImageModal() {
+      document.getElementById('image-modal').classList.remove('flex');
+      document.getElementById('image-modal').classList.add('hidden');
+    }
+
+    function switchImageTab(tab) {
+      currentImageTab = tab;
+      const tabUrl = document.getElementById('img-tab-url');
+      const tabFile = document.getElementById('img-tab-file');
+      const modeUrl = document.getElementById('img-mode-url');
+      const modeFile = document.getElementById('img-mode-file');
+
+      if (tab === 'url') {
+        tabUrl.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-primary text-on-primary';
+        tabFile.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-surface-container-high text-on-surface-variant hover:text-on-surface';
+        modeUrl.classList.remove('hidden');
+        modeFile.classList.add('hidden');
+      } else {
+        tabFile.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-primary text-on-primary';
+        tabUrl.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-surface-container-high text-on-surface-variant hover:text-on-surface';
+        modeFile.classList.remove('hidden');
+        modeUrl.classList.add('hidden');
+      }
+    }
+
+    function confirmInsertImage() {
+      if (currentImageTab === 'url') {
+        const url = document.getElementById('modal-img-url').value.trim();
+        const alt = document.getElementById('modal-img-alt').value.trim() || '게시글 이미지';
+        if (!url) {
+          alert('이미지 URL을 입력해 주세요.');
+          return;
+        }
+        const imgTag = `\n<img src="${url}" alt="${alt}">\n\n`;
+        insertTextAtCursor(imgTag);
+        document.getElementById('modal-img-url').value = '';
+        document.getElementById('modal-img-alt').value = '';
+        closeImageModal();
+      } else {
+        const fileInput = document.getElementById('modal-img-file');
+        const alt = document.getElementById('modal-img-alt-file').value.trim() || '게시글 이미지';
+        const file = fileInput.files[0];
+        if (!file) {
+          alert('이미지 파일을 선택해 주세요.');
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const base64 = e.target.result;
+          const imgTag = `\n<img src="${base64}" alt="${alt}">\n\n`;
+          insertTextAtCursor(imgTag);
+          fileInput.value = '';
+          document.getElementById('modal-img-alt-file').value = '';
+          closeImageModal();
+        };
+        reader.readAsDataURL(file);
+      }
+    }
 
     async function initForm() {
       requireAdmin();
@@ -198,6 +464,7 @@
           document.getElementById('post-category-input').value = post.category || '부동산 뉴스';
           document.getElementById('post-title-input').value = post.title || '';
           document.getElementById('post-content-input').value = post.content || '';
+          if (isPreviewOpen) updateLivePreview();
         }
       }
     }

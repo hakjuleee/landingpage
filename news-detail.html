@@ -225,9 +225,37 @@
     </a>
   </nav>
 
+  <!-- 이미지 라이트박스 (클릭 시 이미지 확대 팝업) -->
+  <div id="image-viewer-modal" class="fixed inset-0 z-50 bg-surface-dark/90 backdrop-blur-md hidden items-center justify-center p-4" onclick="closeImageViewer()">
+    <div class="relative max-w-4xl max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
+      <button onclick="closeImageViewer()" class="absolute -top-12 right-0 text-on-surface hover:text-primary p-2">
+        <span class="material-symbols-outlined text-3xl">close</span>
+      </button>
+      <img id="viewer-img" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl border border-outline-variant/30">
+      <p id="viewer-caption" class="text-sm text-text-secondary mt-3 text-center"></p>
+    </div>
+  </div>
+
   <script src="db.js"></script>
   <script>
     let currentPostId = null;
+
+    function openImageViewer(src, caption) {
+      const modal = document.getElementById('image-viewer-modal');
+      const img = document.getElementById('viewer-img');
+      const cap = document.getElementById('viewer-caption');
+      img.src = src;
+      img.alt = caption || '확대 이미지';
+      cap.textContent = caption && caption !== '이미지' ? caption : '';
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeImageViewer() {
+      const modal = document.getElementById('image-viewer-modal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
 
     async function initDetail() {
       const params = new URLSearchParams(window.location.search);

@@ -308,7 +308,7 @@
       </div>
 
       <div class="fixed inset-0 z-50 bg-surface-dark/80 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto" id="propertyModal">
-        <div class="bg-surface-container-high rounded-2xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl relative border border-outline-variant/30 my-8">
+        <div class="bg-surface-container-high rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl relative border border-outline-variant/30 my-8">
           <button class="absolute top-6 right-6 text-on-surface-variant hover:text-on-surface p-1 rounded-lg hover:bg-surface-container transition-colors" onclick="closeDetailModal()">
             <span class="material-symbols-outlined text-2xl">close</span>
           </button>
@@ -343,13 +343,13 @@
             </div>
           </div>
 
-          <!-- 상세 설명 섹션 -->
+          <!-- 상세 설명 섹션 (HTML 표 및 이미지 렌더링 지원) -->
           <div id="modalDescriptionWrapper" class="bg-surface-container/70 p-5 rounded-xl border border-outline-variant/20 mb-6">
             <div class="flex items-center gap-2 text-xs font-semibold text-primary uppercase tracking-wider mb-2.5">
               <span class="material-symbols-outlined text-sm">description</span>
               <span>매물 상세 설명</span>
             </div>
-            <div id="modalDescription" class="text-body-sm text-on-surface leading-relaxed whitespace-pre-line break-words"></div>
+            <div id="modalDescription" class="text-body-sm text-on-surface leading-relaxed break-words"></div>
           </div>
 
           <p class="text-body-sm text-on-surface-variant mb-6 text-center">
@@ -465,8 +465,7 @@
 
     function formatDescription(desc) {
       if (!desc) return '';
-      const escaped = escapeHtml(desc);
-      return escaped.replace(/(01[016789]-\d{3,4}-\d{4}|0\d{1,2}-\d{3,4}-\d{4})/g, '<a href="tel:$1" class="text-primary underline font-medium hover:text-secondary">$1</a>');
+      return renderRichContent(desc);
     }
 
     function openDetailModal(location, title, price, rooms, floor, moveIn, features, description = '', area = '-', badge = '') {
@@ -563,7 +562,7 @@
                   <div><div class="text-text-secondary text-label-sm">해당층/총층</div><div class="text-on-surface text-body-sm font-semibold">${escapeHtml(item.floor || '-')}</div></div>
                   <div><div class="text-text-secondary text-label-sm">방향</div><div class="text-on-surface text-body-sm font-semibold">${escapeHtml(item.direction || '남향')}</div></div>
                 </div>
-                <p class="text-body-sm text-on-surface-variant line-clamp-2 mb-4 whitespace-pre-line">${escapeHtml(item.description || item.features || '')}</p>
+                <p class="text-body-sm text-on-surface-variant line-clamp-2 mb-4">${escapeHtml(markdownToText(item.description || item.features || ''))}</p>
               </div>
               <div class="flex items-center gap-3 pt-2">
                 <button class="flex-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface py-2.5 rounded-lg text-label-lg font-label-md transition-colors text-center min-h-[44px]" 
@@ -596,7 +595,40 @@
       );
     }
 
+    
+    function openImageViewer(src, caption) {
+      const modal = document.getElementById('image-viewer-modal');
+      const img = document.getElementById('viewer-img');
+      const cap = document.getElementById('viewer-caption');
+      if (!modal || !img) return;
+      img.src = src;
+      img.alt = caption || '확대 이미지';
+      if (cap) cap.textContent = caption && caption !== '이미지' ? caption : '';
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeImageViewer() {
+      const modal = document.getElementById('image-viewer-modal');
+      if (modal) {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', loadPropertiesListings);
   </script>
+
+  <!-- 이미지 라이트박스 (클릭 시 이미지 확대 팝업) -->
+  <div id="image-viewer-modal" class="fixed inset-0 z-[70] bg-surface-dark/90 backdrop-blur-md hidden items-center justify-center p-4" onclick="closeImageViewer()">
+    <div class="relative max-w-4xl max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
+      <button onclick="closeImageViewer()" class="absolute -top-12 right-0 text-on-surface hover:text-primary p-2">
+        <span class="material-symbols-outlined text-3xl">close</span>
+      </button>
+      <img id="viewer-img" src="" alt="" class="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl border border-outline-variant/30">
+      <p id="viewer-caption" class="text-sm text-text-secondary mt-3 text-center"></p>
+    </div>
+  </div>
+
 </body>
 </html>
